@@ -1,0 +1,28 @@
+
+###############################################
+# grafonnet builder
+
+FROM alpine:latest AS gbuilder
+
+# grafonnet
+RUN wget -O grafonnet-main.zip https://github.com/grafana/grafonnet/archive/refs/heads/main.zip
+RUN mkdir -p /jsonnet-libs/github.com/grafana/grafonnet
+RUN unzip grafonnet-main.zip
+RUN cp -R grafonnet-main/gen /jsonnet-libs/github.com/grafana/grafonnet/
+
+# testsonnet
+RUN wget -O testonnet-master.zip https://github.com/jsonnet-libs/testonnet/archive/refs/heads/master.zip
+RUN mkdir -p /jsonnet-libs/github.com/jsonnet-libs/testonnet
+RUN unzip testonnet-master.zip
+RUN cp -R testonnet-master/* /jsonnet-libs/github.com/jsonnet-libs/testonnet/
+
+# grafonnet-extras
+RUN mkdir -p /jsonnet-libs/github.com/redeye-no/grafonnet-extras/dist
+COPY dist/ /jsonnet-libs/github.com/redeye-no/grafonnet-extras/dist/
+
+###############################################
+
+FROM 10.20.30.101:8443/jsonnet:latest
+
+COPY --from=gbuilder /jsonnet-libs /jsonnet-libs
+
