@@ -1,0 +1,118 @@
+###############################################################
+#
+# When this file is introduced to a repository,
+# initialise normalisation by following the
+# usage instructions at the bottom of this file.
+#
+###############################################################
+
+# Handle line endings automatically for files detected as text
+# and leave all files detected as binary untouched.
+* text=auto
+
+#
+# The above will handle all files NOT found below
+#
+
+# Explicitly declare text files that must  be normalized and 
+# converted to native line endings upon checkout.
+#
+*.bat           text eol=crlf
+*.c             text
+*.cs            text
+*.css           text eol=lf
+*.cmd           text eol=lf
+*.containerfile    text eol=lf
+*.definition    text eol=lf
+*.dockerfile    text eol=lf
+*.df            text
+*.gitattributes text
+*.h             text
+*.htm           text eol=lf
+*.html          text eol=lf
+*.imagefile     text eol=lf
+*.java          text eol=lf
+*.js            text eol=lf
+*.json          text eol=lf
+*.jsonnet       text eol=lf
+*.jsp           text eol=lf
+*.jspf          text eol=lf
+*.jspx          text eol=lf
+*.libsonnet     text eol=lf
+*.properties    text eol=lf
+*.sh            text eol=lf
+*.sql           text
+*.tag           text
+*.tagx          text
+*.tld           text eol=lf
+*.txt           text eol=lf
+*.xml           text eol=lf
+*.wsdl          text
+*.xsd           text eol=lf
+*.yml           text eol=lf
+
+# These files that will always have CRLF line endings 
+# upon checkout.
+#
+*.sln text eol=crlf
+
+# These files are binary and should be left untouched
+# (binary is a macro for -text -diff)
+#
+*.aar           binary
+*.class         binary
+*.dex           binary
+*.dll           binary
+*.ear           binary
+*.gif           binary
+*.gz            binary
+*.ico           binary
+*.jar           binary
+*.jpeg          binary
+*.jpg           binary
+*.png           binary
+*.so            binary
+*.tar           binary
+*.war           binary
+*.zip           binary
+
+#
+# End of normalisation definitions.
+#
+
+#
+# Usage (1)
+#
+# 1) Save your current files in Git, so that none of your work is lost.
+#
+# $ git add . -u
+# $ git commit -m "Saving files before refreshing line endings"
+#
+# 2) Add all your changed files back and normalize the line endings.
+#
+# If this fails with
+# then use Usage (2) below.
+#
+# $ git add --renormalize .
+#
+# 3) Show the rewritten, normalized files.
+#
+# $ git status
+#
+# 4) Commit the changes to your repository.
+#
+# $ git commit -m "Normalize all the line endings"
+#
+# End
+
+#
+# Usage (2)
+#
+# Make sure that there are not untracked files
+#
+# $ git read-tree --empty
+# $ git add .
+# $ git commit -m "Configure end-of-line normalization"
+#
+
+
