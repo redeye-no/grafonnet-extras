@@ -1,6 +1,29 @@
 # grafonnet-extras
 
-A thin jsonnet library on top of grafonnet that introduces an OO-friendly
+I can build a simple Grafana dashboard in less than 10 lines of code!
+
+grafonnet-extras brings an OO-friendly programming interface to Grafana dashboards.
+
+This completely removes the nede to know and write Grafonnet, or the underlying JSON.
+
+## Getting started
+
+grafonnet-extras can be accessed in 2 ways:
+
+One is by installing and running it in Jsonnet
+
+	jb install github.com/redeye-no/grafonnet-extras/dist/10.0/@main
+
+The other is running in a container
+
+	nerdctl run --rm \
+	-v $(pwd)/examples:/examples \
+	-v $(pwd)/test:/tests
+	registry/grafonnet-extras /examples/1-simples-dash.jsonnet
+
+Instructions for building the image are included later in this document.
+
+A jsonnet library on top of grafonnet that introduces an OO-friendly
 syntax to building Grafana dashboards.
 
 grafonnet-extras allows traditional developers to work with grafonnet
@@ -22,10 +45,8 @@ For container-savvy users, an image build file is included for running in a cont
 
 	cd grafonnet-extras
 	nerdctl build -t grafonet-extras:latest -f grafonnet-extras.imagefile .
-	nerdctl tag grafonet-extras:latest registry/grafonnet-extras:latest
-	nerdctl push registry/grafonnet-extras:latest
 
-Note: replace registry with your actual registry
+The image is now ready for use and can be pushed to a private registry for inclusion in CI/CD pipelines.
 
 ## Version numbering
 
@@ -72,6 +93,8 @@ Add the panels to a dashboard
 		uid = "52182d76-54c7-4b2f-b88c-4b41cf520e1d",
 		panels = panels)
 
+Tada! We have a dashboard,... in less than 10 lines!
+
 See more examples in the examples folder in this repo.
 
 ## Compiling dashboards
@@ -81,20 +104,16 @@ Assuming that the current directory contains your grafonnet-extras scripts
 	nerdctl run --rm \
 	-v $(pwd)/examples:/examples \
 	-v $(pwd)/test:/tests
-	-it registry/grafonnet-extras \
-	-J /jsonnet-libs \
-	/examples/1-simples-dash.jsonnet
+	grafonnet-extras /examples/1-simples-dash.jsonnet
 
 ## grafan-extras unit testing
 
 	nerdctl run --rm \
 	-v $(pwd)/examples:/examples \
 	-v $(pwd)/test:/tests
-	-it registry/grafonnet-extras \
-	-J /jsonnet-libs \
-	/tests/dash-test.jsonnet
+	grafonnet-extras /tests/dash-test.jsonnet
 
-Note: replace registry with your actual registry
+
 
 
 

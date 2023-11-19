@@ -1,28 +1,35 @@
 
 ###############################################
 # grafonnet builder
+#
+# In this imagefile:
+# - clone and build jsonnet
+# - install jsonnet-bundler
+# - install grafonnet
+# - add grafonnet-extras to vendor
+#
 
-FROM alpine:latest AS gbuilder
+FROM golang:1.21.1-alpine
 
-# grafonnet
-RUN wget -O grafonnet-main.zip https://github.com/grafana/grafonnet/archive/refs/heads/main.zip
-RUN mkdir -p /jsonnet-libs/github.com/grafana/grafonnet
-RUN unzip grafonnet-main.zip
-RUN cp -R grafonnet-main/gen /jsonnet-libs/github.com/grafana/grafonnet/
+RUN apk -U add build-base && \
+  apk add --no-cache git=2.40.1-r0 build-base=0.5-r3 && \
+  rm -rf /var/lib/apt/lists/* 
+    
+RUN git clone https://github.com/google/jsonnet.git && \
+  make -C jsonnet
 
-# testsonnet
-RUN wget -O testonnet-master.zip https://github.com/jsonnet-libs/testonnet/archive/refs/heads/master.zip
-RUN mkdir -p /jsonnet-libs/github.com/jsonnet-libs/testonnet
-RUN unzip testonnet-master.zip
-RUN cp -R testonnet-master/* /jsonnet-libs/github.com/jsonnet-libs/testonnet/
+RUN cp /go/jsonnet/jsonnet /bin/
 
-# grafonnet-extras
-RUN mkdir -p /jsonnet-libs/github.com/redeye-no/grafonnet-extras/dist
-COPY dist/ /jsonnet-libs/github.com/redeye-no/grafonnet-extras/dist/
+# Install jsonnet bundler
+RUN go install -a github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb@latest
+RUN jb init
+RUN jb install https://github.com/grafana/grafonnet/gen/grafonnet-latest@main
+RUN jb install https://github.com/jsonnet-libs/testonnet@master
 
-###############################################
+# Install grafonnet-extras
+RUN mkdir -p /go/vendor/github.com/redeye-no/grafonnet-extras/dist
+COPY dist/ /go/vendor/github.com/redeye-no/grafonnet-extras/dist/
 
-FROM 10.20.30.101:8443/jsonnet:latest
-
-COPY --from=gbuilder /jsonnet-libs /jsonnet-libs
+ENTRYPOINT [ "jsonnet", "-J", "/go/vendor" ]
+CMD [ "--help" ]
 
