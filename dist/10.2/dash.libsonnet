@@ -6,7 +6,7 @@
  *
  */
 local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v10.2.0/main.libsonnet";
-local ec = import "github.com/redeye-no/grafonnet-extras/dist/10.0/configs.libsonnet";
+local ec = import "github.com/redeye-no/grafonnet-extras/dist/10.2/configs.libsonnet";
 local dashboard = grafonnet.dashboard;
 
 {	

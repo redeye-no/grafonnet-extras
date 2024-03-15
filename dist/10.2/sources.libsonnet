@@ -2,10 +2,10 @@
 
 */
 
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet";
-local configs = import "github.com/redeye-no/grafonnet-extras/dist/10.0/configs.libsonnet";
-local dash = import "github.com/redeye-no/grafonnet-extras/dist/10.0/dash.libsonnet";
-local panel = import "github.com/redeye-no/grafonnet-extras/dist/10.0/panel.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v10.2.0/main.libsonnet";
+local configs = import "github.com/redeye-no/grafonnet-extras/dist/10.2/configs.libsonnet";
+local dash = import "github.com/redeye-no/grafonnet-extras/dist/10.2/dash.libsonnet";
+local panel = import "github.com/redeye-no/grafonnet-extras/dist/10.2/panel.libsonnet";
 
 {
 	local timeSeries = grafonnet.panel.timeSeries,

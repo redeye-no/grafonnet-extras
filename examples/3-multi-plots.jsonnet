@@ -16,7 +16,7 @@ What next
 
 # Import the extras libraries
 
-local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.0/main.libsonnet";
+local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
 
 # Create a plot for each metric we'd like to visualise
 

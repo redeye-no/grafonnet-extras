@@ -39,7 +39,7 @@ extras.dashboard(
 {
 	"#": {
 		filename: "main.libsonnet",
-		"import": "github.com/redeye-no/grafonnet-extras/dist/10.0/main.libsonnet",
+		"import": "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet",
 		name: "grafonnet-extras",
 		url: "github.com/redeye-no/grafonnet-extras",
 		version: "10.1",
