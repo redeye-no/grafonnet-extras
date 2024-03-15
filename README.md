@@ -6,47 +6,37 @@ grafonnet-extras brings an OO-friendly programming interface to Grafana dashboar
 
 This completely removes the nede to know and write Grafonnet, or the underlying JSON.
 
-## Getting started
-
-grafonnet-extras can be accessed in 2 ways:
-
-One is by installing and running it in Jsonnet
-
-	jb install github.com/redeye-no/grafonnet-extras/dist/10.0/@main
-
-The other is running in a container
-
-	nerdctl run --rm \
-	-v $(pwd)/examples:/examples \
-	-v $(pwd)/test:/tests
-	registry/grafonnet-extras /examples/1-simples-dash.jsonnet
-
-Instructions for building the image are included later in this document.
-
-A jsonnet library on top of grafonnet that introduces an OO-friendly
-syntax to building Grafana dashboards.
-
-grafonnet-extras allows traditional developers to work with grafonnet
-like a typical programming language.
-
 ## Requirements
 
-grafonnet-extras requires Grafonnet and Jsonnet to run.
+grafonnet-extras requires Jsonnet to run.
 
-For container-savvy users, an imagefile for building container images in included.
+## Getting started
 
-## Installation
+grafonnet-extras works by processing input files written in Jsonnet form. The output is a JSON file that describes a Grafana dashboard.
+The output files can then be uploaded into a Grafana instance, or deployed as provisioned dashboards.
+
+### Installation
 
 If Jsonnet is already installed, add grafonnet-extras with
 
-	jb install github.com/redeye-no/grafonnet-extras/dist/10.0/@main
+	jb install github.com/redeye-no/grafonnet-extras/dist/10.2/@main
 
-For container-savvy users, an image build file is included for running in a container.
+For container-savvy users, a grafonnet-extras image can be built using
 
-	cd grafonnet-extras
-	nerdctl build -t grafonet-extras:latest -f grafonnet-extras.imagefile .
+	nerdctl build -t grafonnet-extras:latest -f grafonnet-extras.imagefile .
 
-The image is now ready for use and can be pushed to a private registry for inclusion in CI/CD pipelines.
+The image is now ready to run, or it can be pushed to a private registry for inclusion in CI/CD pipelines.
+
+### Running in Jsonnet
+
+	jsonnet examples/1-simple-dash.jsonnet
+
+### Running in a container
+
+	nerdctl run --rm \
+	-v $(pwd)/examples:/examples \
+	-v $(pwd)/test:/tests \
+	registry/grafonnet-extras /examples/1-simple-dash.jsonnet
 
 ## Version numbering
 
@@ -64,7 +54,7 @@ The minor number in for internal tracking not associated with grafonnet releases
 
 Import the extras library
 
-	local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.0/main.libsonnet";
+	local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
 
 First, we create a plot (a query with hints on how to display the results)
 
@@ -104,7 +94,7 @@ Assuming that the current directory contains your grafonnet-extras scripts
 	nerdctl run --rm \
 	-v $(pwd)/examples:/examples \
 	-v $(pwd)/test:/tests
-	grafonnet-extras /examples/1-simples-dash.jsonnet
+	grafonnet-extras /examples/1-simple-dash.jsonnet
 
 ## grafan-extras unit testing
 
@@ -112,9 +102,5 @@ Assuming that the current directory contains your grafonnet-extras scripts
 	-v $(pwd)/examples:/examples \
 	-v $(pwd)/test:/tests
 	grafonnet-extras /tests/dash-test.jsonnet
-
-
-
-
 
 
