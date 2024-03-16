@@ -17,7 +17,7 @@ What next
 
 # Import the extras libraries
 
-local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.0/main.libsonnet";
+local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
 
 # First, we create a plot (a query with hints on how to display the results)
 

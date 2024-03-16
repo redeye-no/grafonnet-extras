@@ -2,7 +2,7 @@
 
 */
 local test = import "github.com/jsonnet-libs/testonnet/main.libsonnet";
-local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.0/main.libsonnet";
+local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
 
 local dash = extras.dashboard.new(
 	title = "Test Dash",
