@@ -90,9 +90,10 @@ roygbv - "#00b3cf", "#ffa600", "#de425b", "#488f31", "#2f4b7c", "#488f31", "#f95
 roygbv-ai - "#fd7f6f", "#ffa600", "#ffee65", "#5ad45a", "#7eb0d5", "#bd7ebe", "#fdcce5"
 */
 	plotColors: [
-		"#fd7f6f", "#ffa600", "#ffee65", "#5ad45a", "#7eb0d5", "#bd7ebe", "#fdcce5"
+	       "#fd7f6f", "#ffa600", "#ffee65", "#5ad45a", "#7eb0d5", "#bd7ebe", "#fdcce5", "#a3cdab",
+	       "#d8ffe2", "#5bc0eb", "#bdb2ff", "#6384ff", "#f9a87c", "#88d8b0", "#96610c", "#96401e"
 	],
-	
+
 	statThresholdAbsolutes : {
             "steps": [
               {
