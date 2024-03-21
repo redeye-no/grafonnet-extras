@@ -2,7 +2,7 @@
 
 */
 
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v10.2.0/main.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet";
 
 {
 	build(
@@ -23,15 +23,21 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v10.2.0/mai
 						id: "custom.axisPlacement",
 						value: plot.yAxisPlacement,
 					},
-					if null != configs 
-					&& "stat" != type then
 					{
-						id: "color",
-						value: {
-							mode: "fixed",
-							"fixedColor": configs.plotColors[index % std.length(configs.plotColors)],
-						}
-					} else {}
+						id: "displayName",
+						value: plot.legend,
+					},
+					if null != configs then
+					{
+					    if "stat" != type then
+                        {
+                            id: "color",
+                            value: {
+                                mode: "fixed",
+                                "fixedColor": configs.plotColors[index % std.length(configs.plotColors)],
+                            }
+                        } else {}
+					}
 				]
 			} else {}
 		])
@@ -44,4 +50,3 @@ grafonnet.panel[type].standardOptions.override.byFrameRefID.new(plot.ref)
 + grafonnet.panel[type].standardOptions.override.byFrameRefID.withFixedColorProperty(configs.plotColors[i % std.length(configs.plotColors)])
 
 */
-
