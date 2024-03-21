@@ -27,17 +27,15 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-latest/main
 						id: "displayName",
 						value: plot.legend,
 					},
-					if null != configs then
-					{
-					    if "stat" != type then
-                        {
-                            id: "color",
-                            value: {
-                                mode: "fixed",
-                                "fixedColor": configs.plotColors[index % std.length(configs.plotColors)],
-                            }
-                        } else {}
-					}
+					if null != configs
+					&& "stat" != type then
+                    {
+                        id: "color",
+                        value: {
+                            mode: "fixed",
+                            "fixedColor": configs.plotColors[index % std.length(configs.plotColors)],
+                        }
+                    } else {}
 				]
 			} else {}
 		])
