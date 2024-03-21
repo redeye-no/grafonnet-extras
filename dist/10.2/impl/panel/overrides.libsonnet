@@ -29,13 +29,13 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v10.2.0/mai
 					},
 					if null != configs
 					&& "stat" != type then
-                    {
-                        id: "color",
-                        value: {
-                            mode: "fixed",
-                            "fixedColor": configs.plotColors[index % std.length(configs.plotColors)],
-                        }
-                    } else {}
+                   			{
+                        			id: "color",
+                        			value: {
+                            				mode: "fixed",
+                            				fixedColor: configs.plotColors[index % std.length(configs.plotColors)],
+                        			}
+                    			} else {}
 				]
 			} else {}
 		])
