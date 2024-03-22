@@ -86,12 +86,11 @@ Make sure to keep the following reserved objects:
 /*
 Check out: https://www.heavy.ai/blog/12-color-palettes-for-telling-better-stories-with-your-data
 
-roygbv - "#00b3cf", "#ffa600", "#de425b", "#488f31", "#2f4b7c", "#488f31", "#f95d6a"
-roygbv-ai - "#fd7f6f", "#ffa600", "#ffee65", "#5ad45a", "#7eb0d5", "#bd7ebe", "#fdcce5"
+roygbv-ai       - "#fd7f6f", "#ffa600", "#ffee65", "#5ad45a", "#7eb0d5", "#bd7ebe", "#fdcce5"
+springpastels   - "#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"
 */
 	plotColors: [
-	       "#fd7f6f", "#ffa600", "#ffee65", "#5ad45a", "#7eb0d5", "#bd7ebe", "#fdcce5", "#a3cdab",
-	       "#d8ffe2", "#5bc0eb", "#bdb2ff", "#6384ff", "#f9a87c", "#88d8b0", "#96610c", "#96401e"
+        "#7eb0d5", "#b2e061", "#bd7ebe", "#fd7f6f", "#ffb55a", "#ffee65", "#beb9db", "#8bd3c7", "#fdcce5"
 	],
 
 	statThresholdAbsolutes : {
