@@ -1,4 +1,4 @@
-# grafonnet-extras
+ # grafonnet-extras
 
 I can build a simple Grafana dashboard in less than 10 lines of code!
 
@@ -54,7 +54,7 @@ The minor number in for internal tracking not associated with grafonnet releases
 
 Import the extras library
 
-	local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+	local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.0/main.libsonnet";
 
 First, we create a plot (a query with hints on how to display the results)
 
@@ -71,7 +71,7 @@ Now create panels that will render the plots in a dashboard
 	local panels = [
 		extras.panels.new(
 			title = "Heap memory", 
-			type = "timeSeries",
+			def = { type: "timeSeries" },
 			queries = [ usedMemoryPlot ]
 		) 
 	];
@@ -96,7 +96,7 @@ Assuming that the current directory contains your grafonnet-extras scripts
 	-v $(pwd)/test:/tests
 	grafonnet-extras /examples/1-simple-dash.jsonnet
 
-## grafan-extras unit testing
+## grafonnet-extras unit testing
 
 	nerdctl run --rm \
 	-v $(pwd)/examples:/examples \
