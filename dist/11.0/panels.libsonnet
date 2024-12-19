@@ -2,16 +2,26 @@
 
 */
 
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.1.0/main.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet";
+local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 
 {
-
 	/** ################################################################
 	 * @name Dashboard panel row
 	 *
 	 * @param title Row title.
 	 *
 	 */
+    "#grid":: d.func.new(
+        |||
+            Create a new grid consisting of the row of panels provided as input.
+            The panelWidth argument specifies the default size of each panel in the grid (max value is 24).
+        |||,
+        args=[
+            d.arg("rows", d.T.array, []),
+            d.arg("panelWidth", d.T.number, 1)
+        ],
+    ),
 	grid(
 		rows = [],
 		panelWidth = 1,
@@ -24,6 +34,15 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.1.0/mai
 	 * @param title Row title.
 	 *
 	 */
+    "#row":: d.func.new(
+        "Create a new row",
+        args=[
+            d.arg("title", d.T.string, ""),
+            d.arg("panels", d.T.array, []),
+            d.arg("configs", d.T.object, null),
+            d.arg("collapses", d.T.bool, false)
+        ],
+    ),
 	row(
 		title = "",
 		panels = [],
@@ -47,6 +66,20 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.1.0/mai
 	 * @param configs (default `{}) custom configurations.
 	 *
 	 */
+    "#new":: d.func.new(
+        |||
+            Create a new panel that can be displayed in a dashboard.
+            Each visualisation is defined by one or more plots.
+            A plot defines the data is to be presented/rendered in a panel.
+        |||,
+        args=[
+            d.arg("title", d.T.string, ""),
+            d.arg("def", d.T.object, { type: "stat" }),
+            d.arg("plots", d.T.object, null),
+            d.arg("configs", d.T.object, null),
+            d.arg("geometry", d.T.object, {})
+        ],
+    ),
 	new(
 		title = "",
 		def = { type: "stat" },
@@ -212,6 +245,36 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.1.0/mai
 	})
 	
 	,
+
+	/*
+	alertList
+    annotationsList
+    barChart
+    barGauge
+    candlestick
+    canvas
+    dashboardList
+    datagrid
+    debug
+    gauge
+    geomap
+    heatmap
+    histogram
+    logs
+    news
+    nodeGraph
+    pieChart
+    row
+    stat
+    stateTimeline
+    statusHistory
+    table
+    text
+    timeSeries
+    trend
+    xyChart
+	*/
+	def() ::: ({}),
 	
 }
 

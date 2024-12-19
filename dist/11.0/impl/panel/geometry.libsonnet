@@ -2,7 +2,7 @@
 
 */
 
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.1.0/main.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet";
 
 {
 	build(
@@ -12,12 +12,12 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.1.0/mai
 		) :: 
 		(
 			if std.objectHas(geometry, "w")  then 
-				grafonnet.panel[type].gridPos.withW(geometry.w)
+				grafonnet.panel[def.type].gridPos.withW(geometry.w)
 			else {}
 		)
 		+(	
 			if std.objectHas(geometry, "h")  then 
-				grafonnet.panel[type].gridPos.withH(geometry.h)
+				grafonnet.panel[def.type].gridPos.withH(geometry.h)
 			else {}
 		)
 }

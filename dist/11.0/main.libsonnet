@@ -36,14 +36,25 @@ extras.dashboard(
 
 */
 
+local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
+
 {
-	"#": {
-		filename: "main.libsonnet",
-		"import": "github.com/redeye-no/grafonnet-extras/dist/11.0/main.libsonnet",
-		name: "grafonnet-extras",
-		url: "github.com/redeye-no/grafonnet-extras",
-		version: "11.0",
-	},
+    "#": d.pkg(
+        name= "grafonnet-extras",
+        url= "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet",
+        help= |||
+            OO-friendly templating interface to Grafana dashboards.
+
+            This library contains the following packages:
+
+            `local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";`
+            `extras.dashboard` - create dashboards
+            `extras.panels` - create and configure panels (plots)
+            `extras.inputs` - inputs/variables
+            `extras.sources` - visualisation sources
+            `extras.configs` - visualisation configs
+        |||
+    ),
 	dashboard: import "dash.libsonnet",
 	panels: import "panels.libsonnet",
 	inputs: import "inputs.libsonnet",

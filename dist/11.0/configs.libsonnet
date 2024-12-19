@@ -13,13 +13,15 @@ Make sure to keep the following reserved objects:
 	statMappings
 
 */
+local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 
 {
-	# UID defs
+	# Unique ID definitions for grafonnet-extras assets
 	uids: {
 		prometheus: "aad8f23c2fa06d46c52ae4e06c8d4bdac6074b8f"
 	},
-	
+
+    # Default search and refresh intervals for grafana panels
 	intervals: {
 		refreshDash: "10s",
 		searchWindow: "6h",
@@ -89,6 +91,7 @@ Check out: https://www.heavy.ai/blog/12-color-palettes-for-telling-better-storie
 roygbv-ai       - "#fd7f6f", "#ffa600", "#ffee65", "#5ad45a", "#7eb0d5", "#bd7ebe", "#fdcce5"
 springpastels   - "#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"
 */
+    # A colour palette for panels with multiple plots
 	plotColors: [
         "#7eb0d5", "#b2e061", "#bd7ebe", "#fd7f6f", "#ffb55a", "#ffee65", "#beb9db", "#8bd3c7", "#fdcce5"
 	],

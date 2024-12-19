@@ -2,15 +2,15 @@
 
 */
 
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.1.0/main.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet";
 
 {
 	new(
 		title = "",
-		type = "stat"
+		def = { type: "stat" }
 	) ::
-	grafonnet.panel[type].new(title)
-	+ grafonnet.panel[type].panelOptions.withType()
+	grafonnet.panel[def.type].new(title)
+	+ grafonnet.panel[def.type].panelOptions.withType()
 	,
 	
 	/** ################################################################
@@ -28,12 +28,12 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.1.0/mai
 		index = 0
 	) :: (
 		grafonnet.panel[def.type].queryOptions.withTargetsMixin(plot)
-		+ (import "panel/options.libsonnet").build(type = type, def = def, plot = plot, configs = configs)
-		+ (import "panel/overrides.libsonnet").build(type = type, def = def, plot = plot, configs = configs, index = index)
-		+ (import "panel/thresholds.libsonnet").build(type = type, def = def, plot = plot, configs = configs, index = index)
-		# + (import "panel/mappings.libsonnet").build(type = type, def = def, plot = plot, configs = configs, index = index)
-		# + (import "panel/alerts.libsonnet").build(type = type, def = def, plot = plot, configs = configs, index = index)
-		+ (import "panel/geometry.libsonnet").build(type = type, def = def, geometry = geometry)
+		+ (import "panel/options.libsonnet").build(def = def, plot = plot, configs = configs)
+		+ (import "panel/overrides.libsonnet").build(def = def, plot = plot, configs = configs, index = index)
+		+ (import "panel/thresholds.libsonnet").build(def = def, plot = plot, configs = configs, index = index)
+		# + (import "panel/mappings.libsonnet").build(def = def, plot = plot, configs = configs, index = index)
+		# + (import "panel/alerts.libsonnet").build(def = def, plot = plot, configs = configs, index = index)
+		+ (import "panel/geometry.libsonnet").build(def = def, geometry = geometry)
 	)
 	,	
 }

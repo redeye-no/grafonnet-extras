@@ -2,10 +2,9 @@
 
 */
 
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.1.0/main.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet";
 local configs = import "github.com/redeye-no/grafonnet-extras/dist/11.0/configs.libsonnet";
-local dash = import "github.com/redeye-no/grafonnet-extras/dist/11.0/dash.libsonnet";
-local panel = import "github.com/redeye-no/grafonnet-extras/dist/11.0/panel.libsonnet";
+local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 
 {
 	local timeSeries = grafonnet.panel.timeSeries,
@@ -31,6 +30,24 @@ local panel = import "github.com/redeye-no/grafonnet-extras/dist/11.0/panel.libs
 	 * 	numeric value of this param will be the log base.
 	 *
 	 */
+    "#plot":: d.func.new(
+        |||
+            A plot is an object that defines a datasource, and provides visualisation constraints/configurations.
+            The configuration parameters include legends and axis settings.
+        |||,
+        args=[
+            d.arg("ref", d.T.array, []),
+            d.arg("legend", d.T.string, []),
+            d.arg("description", d.T.array, []),
+            d.arg("query", d.T.object, []),
+            d.arg("unit", d.T.array, []),
+            d.arg("datasource", d.T.object, []),
+            d.arg("legendMode", d.T.string, "list, table, hidden"),
+            d.arg("legendPlacement", d.T.string, "bottom, right"),
+            d.arg("yAxisPlacement", d.T.string, "auto, left, right"),
+            d.arg("yAxisLogScale", d.T.number, "0, 2, 10")
+        ],
+    ),
 	plot(
 		ref = null,
 		legend = "",
@@ -38,8 +55,8 @@ local panel = import "github.com/redeye-no/grafonnet-extras/dist/11.0/panel.libs
 		query = null,
 		unit = null, 
 		datasource = null,
-		legendMode = "auto",
-		legendPlacement = "auto",
+		legendMode = "list",
+		legendPlacement = "bottom",
 		yAxisPlacement = "auto",
 		yAxisLogScale = 0,
 	) :: { 
@@ -65,6 +82,17 @@ local panel = import "github.com/redeye-no/grafonnet-extras/dist/11.0/panel.libs
 	 * @param format Format, one of 'time_series', 'table', 'heatmap'
 	 * @param legend Legend text.
 	 */
+    "#prometheus":: d.func.new(
+        |||
+            A prometheus query definition.
+        |||,
+        args=[
+            d.arg("query", d.T.string, null),
+            d.arg("uid", d.T.string, "extras.configs.uids.prometheus"),
+            d.arg("format", d.T.array, "time_series, table, heatmap"),
+            d.arg("legend", d.T.string, "")
+        ],
+    ),
 	prometheus(
 		query = null,
 		uid = configs.uids.prometheus,
@@ -85,6 +113,16 @@ local panel = import "github.com/redeye-no/grafonnet-extras/dist/11.0/panel.libs
 	 *  'flame_graph', 'raw_frame', 'csv_file', 'csv_content', 'trace', 'manual_entry',
 	 *  'variables-query'], name: 'value', type: 'string' }]
 	 */
+    "#testing":: d.func.new(
+        |||
+            A prometheus query definition.
+        |||,
+        args=[
+            d.arg("format", d.T.string, "random_walk"),
+            d.arg("legend", d.T.string, ""),
+            d.arg("datasource", d.T.object, { type: "datasource", uid: "grafana" })
+        ],
+    ),
 	testing(
 		format = "random_walk",
 		legend = "",

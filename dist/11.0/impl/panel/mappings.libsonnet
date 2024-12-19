@@ -2,7 +2,7 @@
 
 */
 
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.1.0/main.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet";
 
 {
 	build(
@@ -12,7 +12,7 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.1.0/mai
 		configs = null,
 		index = 0
 		) :: 
-		grafonnet.panel[type].standardOptions.withMappingsMixin(
+		grafonnet.panel[def.type].standardOptions.withMappingsMixin(
 			if null != configs then
 				configs.statMappings
 			else {}

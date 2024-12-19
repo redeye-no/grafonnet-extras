@@ -5,18 +5,37 @@
  * @param timezone (default: `'browser'`) Timezone of the dashboard, `'utc'` or `'browser'`
  *
  */
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.1.0/main.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet";
 local ec = import "github.com/redeye-no/grafonnet-extras/dist/11.0/configs.libsonnet";
 local dashboard = grafonnet.dashboard;
+local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 
-{	
+{
+    "#new":: d.func.new(
+        |||
+            Create and configures a new dashboard
+        |||,
+        args=[
+            d.arg("title", d.T.string, "Unnamed Extras Dashboard"),
+            d.arg("description", d.T.string, ""),
+            d.arg("uid", d.T.string, ""),
+            d.arg("editable", d.T.string, "false, true"),
+            d.arg("timezone", d.T.string, "utc, 'IANA TZDB zone ID', browser"),
+            d.arg("schemaVersion", d.T.number, 39),
+            d.arg("configs", d.T.object, "extras.config"),
+            d.arg("grid", d.T.object, null),
+            d.arg("panels", d.T.array, []),
+            d.arg("inputs", d.T.array, []),
+            d.arg("links", d.T.array, [])
+        ],
+    ),
 	new(
 		title = "Unnamed Extras Dashboard",
 		description = "",
 		uid = "",
 		editable = "false",
 		timezone = "utc",
-		schemaVersion = "38",
+		schemaVersion = "39",
 		configs = ec,
 		grid = null,
 		panels = [],
