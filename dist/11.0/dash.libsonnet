@@ -5,7 +5,7 @@
  * @param timezone (default: `'browser'`) Timezone of the dashboard, `'utc'` or `'browser'`
  *
  */
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/main.libsonnet";
 local ec = import "github.com/redeye-no/grafonnet-extras/dist/11.0/configs.libsonnet";
 local dashboard = grafonnet.dashboard;
 local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
@@ -13,7 +13,31 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 {
     "#new":: d.func.new(
         |||
-            Create and configures a new dashboard
+            Create and configures a new dashboard.
+
+            ## Usage
+            The most basic dashboard can be created by providing a title, unique identifier, and a panel.
+
+                local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+                extras.dashboard.new(
+                    title = "Extras: Simple Dash",
+                    uid = "02042265-58c5-478f-980e-420d8519961f",
+                    panels = panels)
+
+            The panels attribute takes an array of panels that will be laid out in the dashboard.
+            Dash attributes:
+
+            |Attribute|Description|
+            |----|----|
+            |`title` | Dashboard title. |
+            |`uid` | Unique identifier. |
+            |`editable` | Enable dashboard editting (default = false). |
+            |`timezone` | Timezone ID (default = utc). |
+            |`configs` | |
+            |`panels` | Array of panels. Layout is determined at runtime by Grafana. |
+            |`grid` | Using `grid` in place of `panels` allows for more control over how panels are sized and laid out. |
+            |`inputs` | Dashboard variablesavailable to the dashboard. |
+            |`links` | |
         |||,
         args=[
             d.arg("title", d.T.string, "Unnamed Extras Dashboard"),

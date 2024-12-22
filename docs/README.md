@@ -5,7 +5,7 @@ permalink: /
 # grafonnet-extras
 
 ```jsonnet
-local grafonnet-extras = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet"
+local grafonnet-extras = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/main.libsonnet"
 ```
 
 OO-friendly templating interface to Grafana dashboards.
@@ -19,11 +19,18 @@ This library contains the following packages:
 `extras.sources` - visualisation sources
 `extras.configs` - visualisation configs
 
+## Usage
+    local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+    extras.dashboard.new(
+        title = "Extras: Simple Dash",
+        uid = "02042265-58c5-478f-980e-420d8519961f",
+        panels = panels)
+
 
 ## Index
 
 * [`obj dashboard`](#obj-dashboard)
-  * [`fn new(title='Unnamed Extras Dashboard', description, uid, editable='false, true', timezone="utc, 'IANA TZDB zone ID', browser", schemaVersion=39, configs='extras.config', grid, panels=[], inputs=[], links=[])`](#fn-dashboardnew)
+  * [`fn new(title='Unnamed Extras Dashboard', description='', uid='', editable='false, true', timezone="utc, 'IANA TZDB zone ID', browser", schemaVersion=39, configs='extras.config', grid, panels=[], inputs=[], links=[])`](#fn-dashboardnew)
 * [`obj panels`](#obj-panels)
   * [`fn new(title='', def={type: 'stat'}, plots, configs, geometry={})`](#fn-panelsnew)
   * [`fn grid(rows=[], panelWidth=1)`](#fn-panelsgrid)
@@ -42,10 +49,34 @@ This library contains the following packages:
 ### fn dashboard.new
 
 ```ts
-new(title='Unnamed Extras Dashboard', description, uid, editable='false, true', timezone="utc, 'IANA TZDB zone ID', browser", schemaVersion=39, configs='extras.config', grid, panels=[], inputs=[], links=[])
+new(title='Unnamed Extras Dashboard', description='', uid='', editable='false, true', timezone="utc, 'IANA TZDB zone ID', browser", schemaVersion=39, configs='extras.config', grid, panels=[], inputs=[], links=[])
 ```
 
-Create and configures a new dashboard
+Create and configures a new dashboard.
+
+## Usage
+The most basic dashboard can be created by providing a title, unique identifier, and a panel.
+
+    local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+    extras.dashboard.new(
+        title = "Extras: Simple Dash",
+        uid = "02042265-58c5-478f-980e-420d8519961f",
+        panels = panels)
+
+The panels attribute takes an array of panels that will be laid out in the dashboard.
+Dash attributes:
+
+|Attribute|Description|
+|----|----|
+|`title` | Dashboard title. |
+|`uid` | Unique identifier. |
+|`editable` | Enable dashboard editting (default = false). |
+|`timezone` | Timezone ID (default = utc). |
+|`configs` | |
+|`panels` | Array of panels. Layout is determined at runtime by Grafana. |
+|`grid` | Using `grid` in place of `panels` allows for more control over how panels are sized and laid out. |
+|`inputs` | Dashboard variablesavailable to the dashboard. |
+|`links` | |
 
 
 ## obj panels
@@ -60,7 +91,40 @@ new(title='', def={type: 'stat'}, plots, configs, geometry={})
 
 Create a new panel that can be displayed in a dashboard.
 Each visualisation is defined by one or more plots.
-A plot defines what data is to be presented/rendered.
+A plot defines the data is to be presented/rendered in a panel.
+
+## Usage
+First, create a plot (a query with hints on how to display the results)
+
+    local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+    local memoryUsedHeapPlot =
+        extras.sources.plot(
+            ref = "mem_used",
+            legend = "used",
+            unit = "cm",
+            query = "base_memory_usedHeap_bytes",
+            datasource = extras.configs.uids.prometheus
+        );
+
+Then create panels that will visualise the plots. A panel specifies how plots are rendered (time series, gauge, heatmap, etc.) in a dashboard.
+A single panel can harbour multiple plots.
+
+    local panels = [
+            extras.panels.new(
+                title = "Used Memory",
+                type = { type: "timeSeries" },
+                plots = [ memoryUsedHeapPlot, memoryCommittedHeapPlot ]
+            )
+        ];
+
+All plots added to a panel will be rendered in a similar manner. For example, multiple plots added to a panel of type 'gauge' will
+all be drawn as gauges.
+Now the panels can be added to the dashboard for display.
+
+    extras.dashboard.new(
+        title = "Extras: Simple Dash",
+        uid = "02042265-58c5-478f-980e-420d8519961f",
+        panels = panels)
 
 
 ### fn panels.grid

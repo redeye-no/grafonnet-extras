@@ -16,35 +16,28 @@ What next
 */
 
 # Import the extras libraries
-
 local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
 
-# First, we create a plot (a query with hints on how to display the results)
+# Import plot defs and dashboard inputs
+local plots = import "./plots.libsonnet";
+local nputs = import "./inputs.libsonnet";
 
-local usedMemoryPlot = 
-	extras.sources.plot(
-		ref = "mem_used",
-		legend = "used", 
-		unit = "cm",
-		query = "base_memory_usedHeap_bytes", 
-		datasource = extras.configs.uids.prometheus
-	);
+local inputs = [ nputs.environment(), nputs.component() ];
 
-# Now create panels that will render the plots in a dashboard
-
+# Create panels that will render the plots in a dashboard
 local panels = [
 		extras.panels.new(
 			title = "Used Memory", 
 			type = "timeSeries",
-			plots = [ usedMemoryPlot ],
+			plots = [ plots.usedMemoryPlot() ],
 			geometry = { x:1, y:1, w: 8, h:8 }
 		) 
 	];
 
 # Add the panels to a dashboard
-
 extras.dashboard.new(
 	title = "Extras: 1. Simple Dash",
 	uid = "02042265-58c5-478f-980e-420d8519961f",
+	inputs = inputs,
 	panels = panels)
 

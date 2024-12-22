@@ -2,7 +2,7 @@
 
 */
 
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/main.libsonnet";
 
 {
 	build(
@@ -23,10 +23,6 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/mai
 					{
 						id: "custom.axisPlacement",
 						value: plot.yAxisPlacement,
-					},
-					{
-						id: "displayName",
-						value: plot.legend,
 					},
 					if null != configs
 					&& "stat" != type then

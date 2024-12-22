@@ -2,7 +2,7 @@
 
 */
 
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/main.libsonnet";
 local configs = import "github.com/redeye-no/grafonnet-extras/dist/11.0/configs.libsonnet";
 local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 

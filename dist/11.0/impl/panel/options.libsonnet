@@ -2,7 +2,7 @@
 
 */
 
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/main.libsonnet";
 
 {
 	build(
@@ -33,7 +33,32 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/mai
 			+ grafonnet.panel[def.type].options.legend.withCalcs([ 'lastNotNull', 'max', ])
 		) else {}
 	)
+
+	// Legend format, because legend_rightSide = true does not work.
+	+ {
+		[if std.objectHas(def, "legend") then "targets"]+: {
+				legend+: {
+					format: def.legend,
+				}
+		}
+	}
+
+	+ (
+		if std.objectHas(def, "legend")
+		&& null != def.legend
+		&& std.objectHas(grafonnet.panel[def.type].options, "withLegend") then (
+			grafonnet.panel[def.type].options.withLegend(def.displayMode)
+		) else {}
+	)
 	*/
+
+	+ (
+		if std.objectHas(def, "legend")
+		&& null != def.legend
+		&& std.objectHas(grafonnet.panel[def.type].options, "withLegend") then (
+			grafonnet.panel[def.type].options.withLegend(def.legend)
+		) else {}
+	)
 
 	+ (
 		if std.objectHas(def, "displayMode")
@@ -65,7 +90,7 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/mai
 			}
 		}
 	}
-	
+
 	// Legend placement, because legend_rightSide = true does not work.
 	+ {
 		[if std.objectHas(plot, "legendPlacement")

@@ -41,7 +41,7 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 {
     "#": d.pkg(
         name= "grafonnet-extras",
-        url= "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet",
+        url= "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/main.libsonnet",
         help= |||
             OO-friendly templating interface to Grafana dashboards.
 
@@ -53,6 +53,13 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
             `extras.inputs` - inputs/variables
             `extras.sources` - visualisation sources
             `extras.configs` - visualisation configs
+
+            ## Usage
+                local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+                extras.dashboard.new(
+                    title = "Extras: Simple Dash",
+                    uid = "02042265-58c5-478f-980e-420d8519961f",
+                    panels = panels)
         |||
     ),
 	dashboard: import "dash.libsonnet",

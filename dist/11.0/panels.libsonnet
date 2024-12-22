@@ -2,7 +2,7 @@
 
 */
 
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.2.0/main.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/main.libsonnet";
 local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 
 {
@@ -71,6 +71,39 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
             Create a new panel that can be displayed in a dashboard.
             Each visualisation is defined by one or more plots.
             A plot defines the data is to be presented/rendered in a panel.
+
+            ## Usage
+            First, create a plot (a query with hints on how to display the results)
+
+                local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+                local memoryUsedHeapPlot =
+                    extras.sources.plot(
+                        ref = "mem_used",
+                        legend = "used",
+                        unit = "cm",
+                        query = "base_memory_usedHeap_bytes",
+                        datasource = extras.configs.uids.prometheus
+                    );
+
+            Then create panels that will visualise the plots. A panel specifies how plots are rendered (time series, gauge, heatmap, etc.) in a dashboard.
+            A single panel can harbour multiple plots.
+
+                local panels = [
+                        extras.panels.new(
+                            title = "Used Memory",
+                            type = { type: "timeSeries" },
+                            plots = [ memoryUsedHeapPlot, memoryCommittedHeapPlot ]
+                        )
+                    ];
+
+            All plots added to a panel will be rendered in a similar manner. For example, multiple plots added to a panel of type 'gauge' will
+            all be drawn as gauges.
+            Now the panels can be added to the dashboard for display.
+
+                extras.dashboard.new(
+                    title = "Extras: Simple Dash",
+                    uid = "02042265-58c5-478f-980e-420d8519961f",
+                    panels = panels)
         |||,
         args=[
             d.arg("title", d.T.string, ""),
@@ -245,36 +278,6 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 	})
 	
 	,
-
-	/*
-	alertList
-    annotationsList
-    barChart
-    barGauge
-    candlestick
-    canvas
-    dashboardList
-    datagrid
-    debug
-    gauge
-    geomap
-    heatmap
-    histogram
-    logs
-    news
-    nodeGraph
-    pieChart
-    row
-    stat
-    stateTimeline
-    statusHistory
-    table
-    text
-    timeSeries
-    trend
-    xyChart
-	*/
-	def() ::: ({}),
 	
 }
 
