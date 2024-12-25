@@ -15,13 +15,66 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 		if null != configs then
 			configs.intervals.refreshDash
 		else "10s")
-		
+
+	/*
+	    Standard coptions
+	*/
 	+ (
 		if std.objectHas(plot, "unit") 
 		&& null != plot.unit then (
 			grafonnet.panel[def.type].standardOptions.withUnit(plot.unit)
 		) else {}
 	)
+
+	/*
+	    Panel options
+	*/
+
+	+ (
+		if std.objectHas(def, "displayMode")
+		&& null != def.displayMode
+		&& std.objectHas(grafonnet.panel[def.type].options, "withDisplayMode") then (
+			grafonnet.panel[def.type].options.withDisplayMode(def.displayMode)
+		) else {}
+	)
+
+	+ (
+		if std.objectHas(def, "orientation")
+		&& null != def.orientation
+		&& std.objectHas(grafonnet.panel[def.type].options, "withOrientation") then (
+			grafonnet.panel[def.type].options.withOrientation(def.orientation)
+		) else {}
+	)
+
+	/*
+	    Default field configs
+	*/
+	+ {
+	    fieldConfig+: {
+            defaults+: {
+                custom+: {
+                    // Plot fill opacity.
+                    [if std.objectHas(def, "fillOpacity")
+                    && def.fillOpacity > 1 then "fillOpacity"]: def.fillOpacity,
+
+                    // Plot line style.
+                    [if std.objectHas(def, "lineWidth")
+                    && def.lineWidth > 1 then "lineWidth"]: def.lineWidth,
+
+                    // Y-axis scale.
+                    [if std.objectHas(plot, "yAxisLogScale")
+                    && plot.yAxisLogScale > 1 then "scaleDistribution"]: {
+                        type: "log",
+                        log: plot.yAxisLogScale,
+                    }
+                }
+            }
+        }
+	}
+
+	/*
+	Attributes for type bargauge
+	*/
 	
 	/*
 	+ (
@@ -60,37 +113,6 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 		) else {}
 	)
 
-	+ (
-		if std.objectHas(def, "displayMode")
-		&& null != def.displayMode
-		&& std.objectHas(grafonnet.panel[def.type].options, "withDisplayMode") then (
-			grafonnet.panel[def.type].options.withDisplayMode(def.displayMode)
-		) else {}
-	)
-
-	+ (
-		if std.objectHas(def, "orientation")
-		&& null != def.orientation
-		&& std.objectHas(grafonnet.panel[def.type].options, "withOrientation") then (
-			grafonnet.panel[def.type].options.withOrientation(def.orientation)
-		) else {}
-	)
-	
-	// Y-axis scale.
-	+ {
-		[if std.objectHas(plot, "yAxisLogScale") 
-		&& plot.yAxisLogScale > 1 then "fieldConfig"]+: {
-			defaults+: {
-				custom+: {
-					scaleDistribution: {
-						type: "log",
-						log: plot.yAxisLogScale,
-					}
-				}
-			}
-		}
-	}
-
 	// Legend placement, because legend_rightSide = true does not work.
 	+ {
 		[if std.objectHas(plot, "legendPlacement")
@@ -100,18 +122,7 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 				}
 		}
 	}
-	
-	// Plot line style.
-	+ {
-		[if std.objectHas(plot, "lineWidth") 
-		&& plot.lineWidth > 1 then "fieldConfig"]+: {
-			defaults+: {
-				custom+: {
-					lineWidth: plot.lineWidth
-				}
-			}
-		}
-	}
+
 }
 
 

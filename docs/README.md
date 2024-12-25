@@ -101,7 +101,7 @@ First, create a plot (a query with hints on how to display the results)
         extras.sources.plot(
             ref = "mem_used",
             legend = "used",
-            unit = "cm",
+            unit = "decabyte",
             query = "base_memory_usedHeap_bytes",
             datasource = extras.configs.uids.prometheus
         );
@@ -112,7 +112,7 @@ A single panel can harbour multiple plots.
     local panels = [
             extras.panels.new(
                 title = "Used Memory",
-                type = { type: "timeSeries" },
+                def = { type: "timeSeries" },
                 plots = [ memoryUsedHeapPlot, memoryCommittedHeapPlot ]
             )
         ];
@@ -125,6 +125,35 @@ Now the panels can be added to the dashboard for display.
         title = "Extras: Simple Dash",
         uid = "02042265-58c5-478f-980e-420d8519961f",
         panels = panels)
+
+## Panel configuration
+
+|Attribute|Description|Examples|
+|----|----|----|
+|`title` | Panel title. | Default "" |
+|`def` | Visual definition. | `{ type: "stat" }}` |
+|`plots` | Array of plots that provide the visualisation data. | `[]` |
+|`configs` | Common configuration parameters. |  |
+|`geometry` | Panel geometry in Grafana units | `{ x:1, y:1, w: 8, h:8 }` |
+
+## Panel definition
+Panel definitions are controlled by the `def` argument object. The general syntax is as follows:
+
+    { type: "panelType" }
+
+The `type` attribute assigns the panel a specific type of visualisation. Each type has a set of options that can be provided.
+`type` can be one of: alertlist, annonlist, barchart, candlestick, canvas, dashlist, datagrid, debug, geomap, heatmap, histogram, logs, news, nodeGraph, piechart, row, state-timeline, status-history, table, text, timeseries, trend, xychart.
+
+|Attribute|Value, enum, Description|Types|
+|----|----|----|
+|`decimals` | Number of decimals to display for values |  |
+|`displayMode` | One of: basic, lcd, gradient. | bargauge, candlestick |
+|`*displayMode` | One of: 'auto', 'color-text', 'color-background', 'color-background-solid', 'gradient-gauge', 'lcd-gauge', 'json-view', 'basic', 'image', 'gauge', 'sparkline', 'data-links', 'custom'. | table |
+|`*displayMode` | One of: 'list', 'table', 'hidden'. | state-timeline |
+|`fillOpacity` | Unique identifier. | barchart, gauge, histogram, status-history, state-timeline, table, timeSeries, trend |
+|`orientation` | auto, vertical, horizontal. | bargauge |
+|`lineWidth` | Unique identifier. | barchart, gauge, histogram, status-history, state-timeline, table, timeSeries, trend |
+
 
 
 ### fn panels.grid

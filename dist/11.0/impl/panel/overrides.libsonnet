@@ -36,6 +36,13 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 				]
 			} else {}
 		])
+
+        + (
+            if std.objectHas(def, "decimals")
+            && null != def.decimals then (
+                grafonnet.panel[def.type].standardOptions.withDecimals(def.decimals)
+            ) else {}
+        )
 }
 
 /*
