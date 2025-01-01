@@ -57,9 +57,17 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
                     [if std.objectHas(def, "fillOpacity")
                     && def.fillOpacity > 1 then "fillOpacity"]: def.fillOpacity,
 
+                    // Gradient mode.
+                    [if std.objectHas(def, "gradientMode")
+                    && null != def.gradientMode then "gradientMode"]: def.gradientMode,
+
                     // Plot line style.
                     [if std.objectHas(def, "lineWidth")
                     && def.lineWidth > 1 then "lineWidth"]: def.lineWidth,
+
+                    // Threshold style.
+                    [if std.objectHas(def, "thresholdStyle")
+                    && null != def.thresholdStyle then "thresholdsStyle"]: { mode: def.thresholdStyle },
 
                     // Y-axis scale.
                     [if std.objectHas(plot, "yAxisLogScale")
@@ -72,10 +80,6 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
         }
 	}
 
-	/*
-	Attributes for type bargauge
-	*/
-	
 	/*
 	+ (
 		if std.objectHas(plot, "legendMode") 

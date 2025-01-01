@@ -37,7 +37,6 @@ This library contains the following packages:
   * [`fn row(title='', panels=[], configs, collapses=false)`](#fn-panelsrow)
 * [`obj sources`](#obj-sources)
   * [`fn plot(ref=[], legend=[], description=[], query=[], unit=[], datasource=[], legendMode='list, table, hidden', legendPlacement='bottom, right', yAxisPlacement='auto, left, right', yAxisLogScale='0, 2, 10')`](#fn-sourcesplot)
-  * [`fn prometheus(query, uid='extras.configs.uids.prometheus', format='time_series, table, heatmap', legend='')`](#fn-sourcesprometheus)
   * [`fn testing(format='random_walk', legend='', datasource={type: 'datasource', uid: 'grafana'})`](#fn-sourcestesting)
 
 ## Fields
@@ -144,15 +143,24 @@ Panel definitions are controlled by the `def` argument object. The general synta
 The `type` attribute assigns the panel a specific type of visualisation. Each type has a set of options that can be provided.
 `type` can be one of: alertlist, annonlist, barchart, candlestick, canvas, dashlist, datagrid, debug, geomap, heatmap, histogram, logs, news, nodeGraph, piechart, row, state-timeline, status-history, table, text, timeseries, trend, xychart.
 
-|Attribute|Value, enum, Description|Types|
+|Attribute|Description|Value, enum, examples|
 |----|----|----|
-|`decimals` | Number of decimals to display for values |  |
-|`displayMode` | One of: basic, lcd, gradient. | bargauge, candlestick |
-|`*displayMode` | One of: 'auto', 'color-text', 'color-background', 'color-background-solid', 'gradient-gauge', 'lcd-gauge', 'json-view', 'basic', 'image', 'gauge', 'sparkline', 'data-links', 'custom'. | table |
-|`*displayMode` | One of: 'list', 'table', 'hidden'. | state-timeline |
-|`fillOpacity` | Unique identifier. | barchart, gauge, histogram, status-history, state-timeline, table, timeSeries, trend |
-|`orientation` | auto, vertical, horizontal. | bargauge |
-|`lineWidth` | Unique identifier. | barchart, gauge, histogram, status-history, state-timeline, table, timeSeries, trend |
+|`decimals` | Number of decimals to display for values | - |
+|`displayMode` |  | basic, lcd, gradient |
+|`*displayMode` |  | 'auto', 'color-text', 'color-background', 'color-background-solid', 'gradient-gauge', 'lcd-gauge', 'json-view', 'basic', 'image', 'gauge', 'sparkline', 'data-links', 'custom'. |
+|`*displayMode` |  | 'list', 'table', 'hidden' |
+|`fillOpacity` |  | barchart, gauge, histogram, status-history, state-timeline, table, timeSeries, trend |
+|`gradientMode` |  | barchart, gauge, histogram, status-history, state-timeline, table, timeSeries, trend |
+|`orientation` |  | auto, vertical, horizontal. |
+|`lineWidth` |  | Unique identifier. |
+|`mappingValue` | Value mappings | `mappingValue: [ { value: "110", text: "one ten", color: "red" } ]` |
+|`mappingRange` | Value mappings by range | `mappingRange: [ { from: 0, to: 10, text: "ones", color:"green" } ]` |
+|`mappingRegex` | Value mappings using regex | `mappingRegex: [ { pattern: "[0-9]", text: "reggy", color: "#f0f0f0" } ]` |
+|`mappingSpecial` | Special value mappings | `mappingSpecial: [ { match: "nan-null", text: "special", color: "blue" } ]` |
+|`thresholdAbsolute` | Absolute threshold values | `thresholdAbsolute: [ { "color": "red", "value": 0 }, { "color": "green", "value": 1 }]` |
+|`thresholdPercent` | Percentage threshold values | `thresholdPercent: [ { "color": "red", "value": 0 }, { "color": "yellow", "value": 25 }, { "color": "green", "value": 50 }]` |
+|`thresholdStyle` | Percentage threshold values | line+area |
+
 
 
 
@@ -186,15 +194,6 @@ plot(ref=[], legend=[], description=[], query=[], unit=[], datasource=[], legend
 
 A plot is an object that defines a datasource, and provides visualisation constraints/configurations.
 The configuration parameters include legends and axis settings.
-
-
-### fn sources.prometheus
-
-```ts
-prometheus(query, uid='extras.configs.uids.prometheus', format='time_series, table, heatmap', legend='')
-```
-
-A prometheus query definition.
 
 
 ### fn sources.testing

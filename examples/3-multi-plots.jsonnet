@@ -15,7 +15,7 @@ What next
 */
 
 # Import the extras libraries
-local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.0/main.libsonnet";
 
 # Import plot defs and dashboard inputs
 local plots = import "./plots.libsonnet";
@@ -27,18 +27,18 @@ local inputs = [ nputs.environment(), nputs.component() ];
 local panels = [
 		extras.panels.new(
 			title = "Up/down", 
-			type = "stat",
+			def= { type: "stat", thresholdAbsolute: extras.configs.upDownThresholds },
 			plots = [ plots.upDownPlot() ]
 		),
 		extras.panels.new(
 			title = "Used Memory", 
-			type = "timeSeries",
+			def= { type: "timeSeries" },
 			plots = [ plots.usedMemoryPlot(), plots.committedMemoryPlot() ],
 			configs = extras.configs
 		),
 		extras.panels.new(
 			title = "Used Memory", 
-			type = "gauge",
+			def= { type: "gauge" },
 			plots = [ plots.usedMemoryPlot(), plots.committedMemoryPlot() ],
 		)
 	];

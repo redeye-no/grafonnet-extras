@@ -5,22 +5,13 @@ Make your own copy of this file in your projects, and provide that to
 functions that expect a configuration, for example, extras.panels.new().
 
 Make sure to keep the following reserved objects:
-	uids,
 	intervals,
-	plotColors, 
-	statThresholdAbsolutes, 
-	statThresholdPercents, 
-	statMappings
+	plotColors
 
 */
 local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 
 {
-	# Unique ID definitions for grafonnet-extras assets
-	uids: {
-		prometheus: "aad8f23c2fa06d46c52ae4e06c8d4bdac6074b8f"
-	},
-
     # Default search and refresh intervals for grafana panels
 	intervals: {
 		refreshDash: "10s",
@@ -96,30 +87,18 @@ springpastels   - "#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee6
         "#7eb0d5", "#b2e061", "#bd7ebe", "#fd7f6f", "#ffb55a", "#ffee65", "#beb9db", "#8bd3c7", "#fdcce5"
 	],
 
-	statThresholdAbsolutes : {
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 0
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-	},
-	
-	statThresholdPercents : {
-		"steps": [
-			{ "color": "red",  "value": null },
-			{ "color": "red", "value": 0 },
-			{ "color": "green", "value": 0.001 }
-		]
-	},
+	upDownThresholds : [
+      { "color": "red", "value": null },
+      { "color": "red", "value": 0 },
+      { "color": "green", "value": 1 }
+    ],
+
+	statThresholdPercents : [
+        { "color": "red",  "value": null },
+        { "color": "red", "value": 0 },
+        { "color": "yellow", "value": 0 },
+        { "color": "green", "value": 0.001 }
+    ],
 	
 	statMappings: [
 		{

@@ -9,28 +9,49 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 		type = "",
 		def = { type: "" },
 		plot = {},
-		configs = null,
 		index = 0
 		) :: 
-		{
-		/*
-		Maybe someone on GitHub can make this work
-		
-			if std.objectHas(grafonnet.panel[def.type], "fieldConfig")
-				&& std.objectHas(grafonnet.panel[def.type].fieldConfig, "defaults") then {
-				grafonnet.panel[def.type].standardOptions.threshold.step.withColor(c.color)
-				+ grafonnet.panel[def.type].standardOptions.threshold.step.withValue(c.value)}
-				for c in configs
-		*/
-		}
+        {
+            fieldConfig+: {
+                defaults+: {
+                    // Absolute thresholds.
+                    [if std.objectHas(def, "thresholdAbsolute")
+                    && null != def.thresholdAbsolute
+                    && std.objectHas(grafonnet.panel[def.type].standardOptions, "threshold") then "thresholds"]+:{
+                        mode: "absolute",
+                        steps: [   { color: item.color,
+                            value: item.value },
+                            for item in def.thresholdAbsolute
+                        ],
+                    },
+                    // Percent thresholds.
+                    [if std.objectHas(def, "thresholdPercent")
+                    && null != def.thresholdPercent
+                    && std.objectHas(grafonnet.panel[def.type].standardOptions, "threshold") then "thresholds"]+:{
+                        mode: "percentage",
+                        steps: [ { color: item.color, value: item.value },
+                            for item in def.thresholdPercent
+                        ],
+                    }
+                }
+            }
+        }
 }
-
-		/*
-		Maybe someone on GitHub can make this work
-		
-			if std.objectHas(grafonnet.panel[def.type], "fieldConfig")
-				&& std.objectHas(grafonnet.panel[def.type].fieldConfig, "defaults") then {
-				grafonnet.panel[def.type].standardOptions.threshold.step.withColor(c.color)
-				+ grafonnet.panel[def.type].standardOptions.threshold.step.withValue(c.value)}
-				for c in configs
-		*/
+/*
+        {
+            fieldConfig+: {
+                defaults+: {
+                    thresholds+: {
+                        // Absolute thresholds.
+                        [if std.objectHas(def, "thresholdAbsolutes")
+                        && null != def.thresholdAbsolutes
+                        && std.objectHas(grafonnet.panel[def.type].standardOptions, "threshold") then "steps"]:
+                        [   { color: item.color,
+                            value: item.value },
+                            for c in def.thresholdAbsolutes
+                        ],
+                    }
+                }
+            }
+        }
+*/

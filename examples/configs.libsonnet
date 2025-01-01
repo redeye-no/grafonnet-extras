@@ -30,23 +30,6 @@ Make sure to keep the following reserved objects:
 		"red", "orange", "yellow", "green", "blue", "purple"
 	],
 	
-	statThresholdAbsolutes : {
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 0
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-	},
-	
 	statThresholdPercents : {
 		"steps": [
 			{ "color": "red",  "value": null },

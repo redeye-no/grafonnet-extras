@@ -45,10 +45,3 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
         )
 }
 
-/*
-Can this be replaced by something more grafonnet-like, like this?
-
-grafonnet.panel[def.type].standardOptions.override.byFrameRefID.new(plot.ref)
-+ grafonnet.panel[def.type].standardOptions.override.byFrameRefID.withFixedColorProperty(configs.plotColors[i % std.length(configs.plotColors)])
-
-*/

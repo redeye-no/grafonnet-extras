@@ -25,3 +25,49 @@
     		for k in std.objectFieldsAll(map)
 	],
 }
+
+/*
+
+local applyModifications(obj, f) =
+    obj + {
+        [x] : f(obj[x]) for x in std.objectFieldsAll(obj)
+    }
+;
+
+applyModifications({
+    visible: "foo",
+    hidden:: "bar",
+}, function(x) x + " modified")
+
+--
+
+local join_objects(objs) =
+    local aux(arr, i, running) =
+        if i >= std.length(arr) then
+            running
+        else
+            aux(arr, i + 1, running + arr[i]) tailstrict;
+    aux(objs, 0, {});
+
+{
+  foo(x):: {
+    [x + i]: {
+        data: "x = %s and i = %s" % [x, i],
+    } for i in ["1", "2"]
+  },
+
+  local items = ["a", "b", "c"],
+  joined: join_objects([self.foo(item) for item in items]),
+}
+>>> Taking a step back, you can also just do this :)
+
+    {
+      local items = ["a", "b", "c"],
+      joined: {
+        [x + i]: {
+          data: "x = %s and i = %s" % [x, i],
+        } for i in ["1", "2"] for x in items
+      }
+    }
+
+*/

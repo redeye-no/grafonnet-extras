@@ -3,7 +3,6 @@
 */
 
 local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/main.libsonnet";
-local configs = import "github.com/redeye-no/grafonnet-extras/dist/11.0/configs.libsonnet";
 local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 
 {
@@ -70,37 +69,7 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 		yAxisPlacement: yAxisPlacement,
 		yAxisLogScale: yAxisLogScale,
 		unit: unit
-	},	
-						
-	/**
-	 * Prometheus datasource
-	 *
-	 * @name prometheus
-	 *
-	 * @param query Query for series data.
-	 * @param uid Reference identifier for the datasource.
-	 * @param format Format, one of 'time_series', 'table', 'heatmap'
-	 * @param legend Legend text.
-	 */
-    "#prometheus":: d.func.new(
-        |||
-            A prometheus query definition.
-        |||,
-        args=[
-            d.arg("query", d.T.string, null),
-            d.arg("uid", d.T.string, "extras.configs.uids.prometheus"),
-            d.arg("format", d.T.array, "time_series, table, heatmap"),
-            d.arg("legend", d.T.string, "")
-        ],
-    ),
-	prometheus(
-		query = null,
-		uid = configs.uids.prometheus,
-		format = "time_series", # one of 'time_series', 'table', 'heatmap'
-		legend = ""
-	) :: grafonnet.query.prometheus.new(uid, query)
-	+ grafonnet.query.prometheus.withFormat(format)
-	+ grafonnet.query.prometheus.withLegendFormat(legend),
+	},
 						
 	/**
 	 * Test data
