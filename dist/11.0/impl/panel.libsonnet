@@ -28,6 +28,7 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 		index = 0
 	) :: (
 		grafonnet.panel[def.type].queryOptions.withTargetsMixin(plot)
+		+ (import "panel/configs.libsonnet").build(def = def, plot = plot)
 		+ (import "panel/options.libsonnet").build(def = def, plot = plot, configs = configs)
 		+ (import "panel/overrides.libsonnet").build(def = def, plot = plot, configs = configs, index = index)
 		+ (import "panel/thresholds.libsonnet").build(def = def, plot = plot, index = index)

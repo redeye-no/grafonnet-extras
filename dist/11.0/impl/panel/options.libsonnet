@@ -47,40 +47,6 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 	)
 
 	/*
-	    Default field configs
-	*/
-	+ {
-	    fieldConfig+: {
-            defaults+: {
-                custom+: {
-                    // Plot fill opacity.
-                    [if std.objectHas(def, "fillOpacity")
-                    && def.fillOpacity > 1 then "fillOpacity"]: def.fillOpacity,
-
-                    // Gradient mode.
-                    [if std.objectHas(def, "gradientMode")
-                    && null != def.gradientMode then "gradientMode"]: def.gradientMode,
-
-                    // Plot line style.
-                    [if std.objectHas(def, "lineWidth")
-                    && def.lineWidth > 1 then "lineWidth"]: def.lineWidth,
-
-                    // Threshold style.
-                    [if std.objectHas(def, "thresholdStyle")
-                    && null != def.thresholdStyle then "thresholdsStyle"]: { mode: def.thresholdStyle },
-
-                    // Y-axis scale.
-                    [if std.objectHas(plot, "yAxisLogScale")
-                    && plot.yAxisLogScale > 1 then "scaleDistribution"]: {
-                        type: "log",
-                        log: plot.yAxisLogScale,
-                    }
-                }
-            }
-        }
-	}
-
-	/*
 	+ (
 		if std.objectHas(plot, "legendMode") 
 		&& null != plot.legendMode 
@@ -126,6 +92,27 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 				}
 		}
 	}
+
+	+ (
+		if std.objectHas(def, "showThresholdLabels")
+		&& null != def.showThresholdLabels
+		&& std.objectHas(grafonnet.panel[def.type].options, "withLegend") then (
+			grafonnet.panel[def.type].options.withLegend(def.showThresholdLabels)
+		) else {}
+	)
+
+	+ {
+     	/*
+     	    Default field configs
+     	*/
+     	    options+: {
+                 [if std.objectHas(def, "showThresholdLabels")
+                 && null != def.showThresholdLabels then "showThresholdLabels"]: def.showThresholdLabels,
+
+                 [if std.objectHas(def, "showThresholdMarkers")
+                 && null != def.showThresholdMarkers then "showThresholdMarkers"]: def.showThresholdMarkers,
+             }
+     	}
 
 }
 

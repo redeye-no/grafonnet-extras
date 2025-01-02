@@ -131,8 +131,8 @@ Now the panels can be added to the dashboard for display.
 |----|----|----|
 |`title` | Panel title. | Default "" |
 |`def` | Visual definition. | `{ type: "stat" }}` |
-|`plots` | Array of plots that provide the visualisation data. | `[]` |
-|`configs` | Common configuration parameters. |  |
+|`plots` | Array of plots that provide the visualisation data. | See previous example |
+|`configs` | Common configuration parameters such as refresh intervals, plot colours. | `{ intervals: { refreshDash: "10s", searchWindow: "6h", searchTime: "now" }}` |
 |`geometry` | Panel geometry in Grafana units | `{ x:1, y:1, w: 8, h:8 }` |
 
 ## Panel definition
@@ -145,22 +145,27 @@ The `type` attribute assigns the panel a specific type of visualisation. Each ty
 
 |Attribute|Description|Value, enum, examples|
 |----|----|----|
+|`barAlignment` | Bar alignment when drawStyle is set to `bar` | -1, 0, 1 |
 |`decimals` | Number of decimals to display for values | - |
 |`displayMode` |  | basic, lcd, gradient |
 |`*displayMode` |  | 'auto', 'color-text', 'color-background', 'color-background-solid', 'gradient-gauge', 'lcd-gauge', 'json-view', 'basic', 'image', 'gauge', 'sparkline', 'data-links', 'custom'. |
 |`*displayMode` |  | 'list', 'table', 'hidden' |
+|`drawStyle` |  | line, bar, points |
 |`fillOpacity` |  | barchart, gauge, histogram, status-history, state-timeline, table, timeSeries, trend |
 |`gradientMode` |  | barchart, gauge, histogram, status-history, state-timeline, table, timeSeries, trend |
 |`orientation` |  | auto, vertical, horizontal. |
+|`lineInterpolation` |  | linear, smooth, stepBefore, stepAfter |
 |`lineWidth` |  | Unique identifier. |
 |`mappingValue` | Value mappings | `mappingValue: [ { value: "110", text: "one ten", color: "red" } ]` |
 |`mappingRange` | Value mappings by range | `mappingRange: [ { from: 0, to: 10, text: "ones", color:"green" } ]` |
 |`mappingRegex` | Value mappings using regex | `mappingRegex: [ { pattern: "[0-9]", text: "reggy", color: "#f0f0f0" } ]` |
 |`mappingSpecial` | Special value mappings | `mappingSpecial: [ { match: "nan-null", text: "special", color: "blue" } ]` |
+|`min` | Configure min value | `min: 1` |
+|`max` | Configure max value | `max: 7` |
+|`pointSize` | Configure max value | `max: 7` |
 |`thresholdAbsolute` | Absolute threshold values | `thresholdAbsolute: [ { "color": "red", "value": 0 }, { "color": "green", "value": 1 }]` |
 |`thresholdPercent` | Percentage threshold values | `thresholdPercent: [ { "color": "red", "value": 0 }, { "color": "yellow", "value": 25 }, { "color": "green", "value": 50 }]` |
 |`thresholdStyle` | Percentage threshold values | line+area |
-
 
 
 
