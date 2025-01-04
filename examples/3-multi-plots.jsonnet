@@ -15,54 +15,32 @@ What next
 */
 
 # Import the extras libraries
+local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.0/main.libsonnet";
 
-local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+# Import plot defs and dashboard inputs
+local plots = import "./plots.libsonnet";
+local nputs = import "./inputs.libsonnet";
+local configs = import "./configs.libsonnet";
 
-# Create a plot for each metric we'd like to visualise
+local inputs = [ nputs.environment(), nputs.component() ];
 
-local usedMemoryPlot = 
-	extras.sources.plot(
-		ref = "mem_used",
-		legend = "used", 
-		query = "base_memory_usedHeap_bytes", 
-		datasource = extras.configs.uids.prometheus
-	);
-
-local committedMemoryPlot = 
-	extras.sources.plot(
-		ref = "mem_committed",
-		legend = "committed", 
-		legendPlacement = "right",
-		query = "base_memory_committedHeap_bytes", 
-		datasource = extras.configs.uids.prometheus
-	);
-
-local upDownPlot = 
-	extras.sources.plot(
-		ref = "up_down",
-		legend = "state", 
-		query = "up",
-		datasource = extras.configs.uids.prometheus
-	);
-
-
-# Add the plots to a panel
+# Create panels that will render the plots in a dashboard
 local panels = [
 		extras.panels.new(
 			title = "Up/down", 
-			type = "stat",
-			plots = [ upDownPlot ]
+			def= { type: "stat", thresholdAbsolute: configs.upDownThresholds },
+			plots = [ plots.upDownPlot ]
 		),
 		extras.panels.new(
 			title = "Used Memory", 
-			type = "timeSeries",
-			plots = [ usedMemoryPlot, committedMemoryPlot ],
+			def= { type: "timeSeries" },
+			plots = [ plots.usedMemoryPlot, plots.committedMemoryPlot ],
 			configs = extras.configs
 		),
 		extras.panels.new(
 			title = "Used Memory", 
-			type = "gauge",
-			plots = [ usedMemoryPlot, committedMemoryPlot ],
+			def= { type: "gauge" },
+			plots = [ plots.usedMemoryPlot, plots.committedMemoryPlot ],
 		)
 	];
 	
@@ -79,6 +57,7 @@ local grid = extras.panels.grid(rows = rows, panelWidth = 8);
 extras.dashboard.new(
 	title = "Extras: 3. Multiplot Dash",
 	uid = "5403f355-5e45-4f7e-bb66-0bda19ff98ac",
+	inputs = inputs,
 	grid = grid
 )
 	

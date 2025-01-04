@@ -14,38 +14,26 @@ What next
 */
 
 # Import the extras libraries
+local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.0/main.libsonnet";
 
-local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+# Import plot defs and dashboard inputs
+local plots = import "./plots.libsonnet";
+local nputs = import "./inputs.libsonnet";
+local configs = import "./configs.libsonnet";
 
-# Create a plot for each metric we'd like to visualise
+local inputs = [ nputs.environment(), nputs.component() ];
 
-local usedMemoryPlot = 
-	extras.sources.plot(
-		ref = "mem_used",
-		legend = "used", 
-		query = "base_memory_usedHeap_bytes", 
-		datasource = extras.configs.uids.prometheus
-	);
-
-local upDownPlot = 
-	extras.sources.plot(
-		ref = "up_down",
-		legend = "state", 
-		query = "up",
-		datasource = extras.configs.uids.prometheus
-	);
-
-# Add the plots to a panel
+# Create panels that will render the plots in a dashboard
 local panels = [
 		extras.panels.new(
-			title = "Up/down", 
-			type = "stat",
-			plots = [ upDownPlot ]
+			title = "Up/down",
+			def= { type: "stat", thresholdAbsolute: configs.upDownThresholds },
+			plots = [ plots.upDownPlot ]
 		),
 		extras.panels.new(
-			title = "Used Memory", 
-			type = "timeSeries",
-			plots = [ usedMemoryPlot ],
+			title = "Used Memory",
+			def= { type: "timeSeries" },
+			plots = [ plots.usedMemoryPlot ],
 		)
 	];
 
@@ -61,4 +49,5 @@ local grid = extras.panels.grid(rows = rows, panelWidth = 8);
 extras.dashboard.new(
 	title = "Extras: 2. Grid Dash",
 	uid = "d24ee9aa-76a3-405b-b6c8-100ce990b7b9",
+	inputs = inputs,
 	grid = grid)

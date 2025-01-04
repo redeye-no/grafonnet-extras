@@ -2,10 +2,9 @@
 
 */
 
-local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-latest/main.libsonnet";
-local configs = import "github.com/redeye-no/grafonnet-extras/dist/10.0/configs.libsonnet";
-local dash = import "github.com/redeye-no/grafonnet-extras/dist/10.0/dash.libsonnet";
-local panel = import "github.com/redeye-no/grafonnet-extras/dist/10.0/panel.libsonnet";
+local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/main.libsonnet";
+local dash = import "github.com/redeye-no/grafonnet-extras/dist/11.0/dash.libsonnet";
+local panel = import "github.com/redeye-no/grafonnet-extras/dist/11.0/panel.libsonnet";
 
 local dashboard = grafonnet.dashboard;
 local variable = grafonnet.dashboard.variable;
@@ -197,13 +196,11 @@ local variable = grafonnet.dashboard.variable;
 		description = "",
 		hide = 0,
 		options = [],
-        value = "",
 		type = "custom",
 	) :: 
 		variable.custom.new(
 			name = name,
 			values = options,
-			value = value,
 		)
 		+ variable.custom.generalOptions.withDescription(description)
 	

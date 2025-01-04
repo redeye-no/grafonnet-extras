@@ -23,6 +23,7 @@ RUN cp /go/jsonnet/jsonnet /bin/
 # Install jsonnet bundler
 RUN go install -a github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb@latest
 RUN jb init
+RUN jb install https://github.com/grafana/grafonnet/gen/grafonnet-v11.4.0@main
 RUN jb install https://github.com/grafana/grafonnet/gen/grafonnet-v10.2.0@main
 RUN jb install https://github.com/grafana/grafonnet/gen/grafonnet-v10.0.0@main
 RUN jb install https://github.com/jsonnet-libs/testonnet@master
