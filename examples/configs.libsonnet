@@ -21,44 +21,32 @@ Make sure to keep the following reserved objects:
 	},
 	
 	intervals: {
-		refreshDash: "10s",
-		searchWindow: "6h",
+		refreshDash: "15s",
+		searchWindow: "3h",
 		searchTime: "now"
 	},
 	
 	plotColors: [
-		"red", "orange", "yellow", "green", "blue", "purple"
+		"#7eb0d5", "#b2e061", "#bd7ebe", "#fd7f6f", "#ffb55a", "#ffee65", "#beb9db", "#8bd3c7", "#fdcce5"
 	],
-	
-	statThresholdPercents : {
-		"steps": [
+
+	upDownThresholds : [
 			{ "color": "red",  "value": null },
 			{ "color": "red", "value": 0 },
-			{ "color": "green", "value": 0.001 }
-		]
-	},
-	
-	statMappings: [
-		{
-			"type": "value",
-			"options": {
-				"0": {
-					"text": "Down",
-					"color": "red",
-					"index": 0
-				}
-			}
-		},
-		{
-			"type": "value",
-			"options": {
-				"1": {
-					"text": "Up",
-					"color": "green",
-					"index": 1
-				}
-			}
-		}
+			{ "color": "green", "value": 1 }
+	],
+
+	memRatioThresholds :  [
+			{ "color": "red",  "value": null },
+			{ "color": "red", "value": 0 },
+			{ "color": "yellow", "value": 30 },
+			{ "color": "green", "value": 60 }
+	],
+
+	upDownMappings: [
+	    { value: null, text: "Down", color: "red" },
+	    { value: 0, text: "Down" },
+	    { value: 1, text: "Up" }
 	],
 }
 

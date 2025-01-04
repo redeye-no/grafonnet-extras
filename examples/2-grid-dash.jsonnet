@@ -19,20 +19,21 @@ local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.0/main.libs
 # Import plot defs and dashboard inputs
 local plots = import "./plots.libsonnet";
 local nputs = import "./inputs.libsonnet";
+local configs = import "./configs.libsonnet";
 
 local inputs = [ nputs.environment(), nputs.component() ];
 
 # Create panels that will render the plots in a dashboard
 local panels = [
 		extras.panels.new(
-			title = "Up/down", 
-			def= { type: "stat", thresholdAbsolute: extras.configs.upDownThresholds },
-			plots = [ plots.upDownPlot() ]
+			title = "Up/down",
+			def= { type: "stat", thresholdAbsolute: configs.upDownThresholds },
+			plots = [ plots.upDownPlot ]
 		),
 		extras.panels.new(
-			title = "Used Memory", 
+			title = "Used Memory",
 			def= { type: "timeSeries" },
-			plots = [ plots.usedMemoryPlot() ],
+			plots = [ plots.usedMemoryPlot ],
 		)
 	];
 

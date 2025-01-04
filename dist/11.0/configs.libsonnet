@@ -14,8 +14,8 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 {
     # Default search and refresh intervals for grafana panels
 	intervals: {
-		refreshDash: "10s",
-		searchWindow: "6h",
+		refreshDash: "15s",
+		searchWindow: "3h",
 		searchTime: "now"
 	},
 	

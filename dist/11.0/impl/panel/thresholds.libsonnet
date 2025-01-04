@@ -37,21 +37,3 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
             }
         }
 }
-/*
-        {
-            fieldConfig+: {
-                defaults+: {
-                    thresholds+: {
-                        // Absolute thresholds.
-                        [if std.objectHas(def, "thresholdAbsolutes")
-                        && null != def.thresholdAbsolutes
-                        && std.objectHas(grafonnet.panel[def.type].standardOptions, "threshold") then "steps"]:
-                        [   { color: item.color,
-                            value: item.value },
-                            for c in def.thresholdAbsolutes
-                        ],
-                    }
-                }
-            }
-        }
-*/

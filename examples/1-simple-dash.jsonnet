@@ -30,7 +30,7 @@ local panels = [
 		extras.panels.new(
 			title = "Used Memory", 
 			def= { type: "timeSeries" },
-			plots = [ plots.usedMemoryPlot() ],
+			plots = [ plots.usedMemoryPlot ],
 			geometry = { x:1, y:1, w: 8, h:8 }
 		) 
 	];
