@@ -7,12 +7,12 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 {
 	build(
 		type = "",
-		def = { type: "" },
+		settings = { type: "" },
 		plot = {},
 		configs = null,
 		index = 0
 		) :: 
-		grafonnet.panel[def.type].standardOptions.withOverridesMixin([
+		grafonnet.panel[settings.type].standardOptions.withOverridesMixin([
 			if std.objectHas(plot, "ref") then 
 			{
 				matcher: {
@@ -38,9 +38,9 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 		])
 
         + (
-            if std.objectHas(def, "decimals")
-            && null != def.decimals then (
-                grafonnet.panel[def.type].standardOptions.withDecimals(def.decimals)
+            if std.objectHas(settings, "decimals")
+            && null != settings.decimals then (
+                grafonnet.panel[settings.type].standardOptions.withDecimals(settings.decimals)
             ) else {}
         )
 }

@@ -58,7 +58,7 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 	 * @name extras panel
 	 *
 	 * @param title The title of the panel.
-	 * @param def Panel definitions
+	 * @param settings Panel definitions
 	 *   type - The panel type (e.g. stat, barGauge, timeSeries, heatMap, etc.).
 	 *   displayMode - "basic", "lcd", "gradient"
 	 *   orientation - "auto", "vertical", "horizontal"
@@ -91,7 +91,7 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
                 local panels = [
                         extras.panels.new(
                             title = "Used Memory",
-                            def = { type: "timeSeries" },
+                            settings = { type: "timeSeries" },
                             plots = [ memoryUsedHeapPlot, memoryCommittedHeapPlot ]
                         )
                     ];
@@ -110,13 +110,13 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
             |Attribute|Description|Examples|
             |----|----|----|
             |`title` | Panel title. | Default "" |
-            |`def` | Visual definition. | `{ type: "stat" }}` |
+            |`settings` | Visual definition. | `{ type: "stat" }}` |
             |`plots` | Array of plots that provide the visualisation data. | See previous example |
             |`configs` | Common configuration parameters such as refresh intervals, plot colours. | `{ intervals: { refreshDash: "10s", searchWindow: "6h", searchTime: "now" }}` |
             |`geometry` | Panel geometry in Grafana units | `{ x:1, y:1, w: 8, h:8 }` |
 
             ## Panel definition
-            Panel definitions are controlled by the `def` argument object. The general syntax is as follows:
+            Panel definitions are controlled by the `settings` argument object. The general syntax is as follows:
 
                 { type: "panelType" }
 
@@ -150,7 +150,7 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
         |||,
         args=[
             d.arg("title", d.T.string, ""),
-            d.arg("def", d.T.object, { type: "stat" }),
+            d.arg("settings", d.T.object, { type: "stat" }),
             d.arg("plots", d.T.object, null),
             d.arg("configs", d.T.object, null),
             d.arg("geometry", d.T.object, {})
@@ -158,15 +158,15 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
     ),
 	new(
 		title = "",
-		def = { type: "stat" },
+		settings = { type: "stat" },
 		plots = [],
 		configs = null,
 		geometry = {}
 	) :: 		
-	(import "impl/panel.libsonnet").new(title = title, def = def)
+	(import "impl/panel.libsonnet").new(title = title, settings = settings)
 
 	+ (
-		local options = [(import "impl/panel.libsonnet").build(def = def, plot = plots[i], configs = configs, index = i),
+		local options = [(import "impl/panel.libsonnet").build(settings = settings, plot = plots[i], configs = configs, index = i),
 		for i in std.range(0, std.length(plots) - 1)];
 
 		/*

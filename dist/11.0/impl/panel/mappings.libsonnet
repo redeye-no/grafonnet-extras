@@ -7,7 +7,7 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 {
 	build(
 		type = "",
-		def = { type: "" },
+		settings = { type: "" },
 		plot = {},
 		index = 0
 		) ::
@@ -15,9 +15,9 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
             fieldConfig+: {
                 defaults+: {
                     // Value mappings.
-                    [if std.objectHas(def, "mappingValue")
-                    && null != def.mappingValue
-                    && std.objectHas(grafonnet.panel[def.type].standardOptions, "mapping") then "mappings"]+:[
+                    [if std.objectHas(settings, "mappingValue")
+                    && null != settings.mappingValue
+                    && std.objectHas(grafonnet.panel[settings.type].standardOptions, "mapping") then "mappings"]+:[
                         {
                             type: "value",
                             options: { [item.value] : {
@@ -26,7 +26,7 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
                                 },
                             }
                         },
-                        for item in def.mappingValue
+                        for item in settings.mappingValue
                     ],
                 }
             }
@@ -35,9 +35,9 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
             fieldConfig+: {
                 defaults+: {
                     // Range mappings.
-                    [if std.objectHas(def, "mappingRange")
-                    && null != def.mappingRange
-                    && std.objectHas(grafonnet.panel[def.type].standardOptions, "mapping") then "mappings"]+:[
+                    [if std.objectHas(settings, "mappingRange")
+                    && null != settings.mappingRange
+                    && std.objectHas(grafonnet.panel[settings.type].standardOptions, "mapping") then "mappings"]+:[
                         {
                             type: "range",
                             options: { from: item.from, to: item.to, result: {
@@ -46,7 +46,7 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
                                 },
                             }
                         },
-                        for item in def.mappingRange
+                        for item in settings.mappingRange
                     ],
                 }
             }
@@ -55,9 +55,9 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
             fieldConfig+: {
                 defaults+: {
                     // Regex mappings.
-                    [if std.objectHas(def, "mappingRegex")
-                    && null != def.mappingRegex
-                    && std.objectHas(grafonnet.panel[def.type].standardOptions, "mapping") then "mappings"]+:[
+                    [if std.objectHas(settings, "mappingRegex")
+                    && null != settings.mappingRegex
+                    && std.objectHas(grafonnet.panel[settings.type].standardOptions, "mapping") then "mappings"]+:[
                         {
                             type: "regex",
                             options: { pattern: item.pattern, result: {
@@ -66,7 +66,7 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
                                 },
                             }
                         },
-                        for item in def.mappingRegex
+                        for item in settings.mappingRegex
                     ],
                 }
             }
@@ -75,9 +75,9 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
             fieldConfig+: {
                 defaults+: {
                     // Special mappings.
-                    [if std.objectHas(def, "mappingSpecial")
-                    && null != def.mappingSpecial
-                    && std.objectHas(grafonnet.panel[def.type].standardOptions, "mapping") then "mappings"]+:[
+                    [if std.objectHas(settings, "mappingSpecial")
+                    && null != settings.mappingSpecial
+                    && std.objectHas(grafonnet.panel[settings.type].standardOptions, "mapping") then "mappings"]+:[
                         {
                             type: "special",
                             options: { match: item.match, result: {
@@ -86,7 +86,7 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
                                 },
                             }
                         },
-                        for item in def.mappingSpecial
+                        for item in settings.mappingSpecial
                     ],
                 }
             }

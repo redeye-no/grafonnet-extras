@@ -7,7 +7,7 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 {
 	build(
 		type = "",
-		def = { type: "" },
+		settings = { type: "" },
 		plot = {},
 		index = 0
 		) :: 
@@ -15,22 +15,22 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
             fieldConfig+: {
                 defaults+: {
                     // Absolute thresholds.
-                    [if std.objectHas(def, "thresholdAbsolute")
-                    && null != def.thresholdAbsolute
-                    && std.objectHas(grafonnet.panel[def.type].standardOptions, "threshold") then "thresholds"]+:{
+                    [if std.objectHas(settings, "thresholdAbsolute")
+                    && null != settings.thresholdAbsolute
+                    && std.objectHas(grafonnet.panel[settings.type].standardOptions, "threshold") then "thresholds"]+:{
                         mode: "absolute",
                         steps: [   { color: item.color,
                             value: item.value },
-                            for item in def.thresholdAbsolute
+                            for item in settings.thresholdAbsolute
                         ],
                     },
                     // Percent thresholds.
-                    [if std.objectHas(def, "thresholdPercent")
-                    && null != def.thresholdPercent
-                    && std.objectHas(grafonnet.panel[def.type].standardOptions, "threshold") then "thresholds"]+:{
+                    [if std.objectHas(settings, "thresholdPercent")
+                    && null != settings.thresholdPercent
+                    && std.objectHas(grafonnet.panel[settings.type].standardOptions, "threshold") then "thresholds"]+:{
                         mode: "percentage",
                         steps: [ { color: item.color, value: item.value },
-                            for item in def.thresholdPercent
+                            for item in settings.thresholdPercent
                         ],
                     }
                 }

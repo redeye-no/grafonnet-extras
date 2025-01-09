@@ -7,11 +7,11 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 {
 	build(
 		type = "",
-		def = { type: "" },
+		settings = { type: "" },
 		plot = {},
 		configs = null
 	) :: 
-	grafonnet.panel[def.type].queryOptions.withInterval(
+	grafonnet.panel[settings.type].queryOptions.withInterval(
 		if null != configs then
 			configs.intervals.refreshDash
 		else "10s")
@@ -22,7 +22,7 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 	+ (
 		if std.objectHas(plot, "unit") 
 		&& null != plot.unit then (
-			grafonnet.panel[def.type].standardOptions.withUnit(plot.unit)
+			grafonnet.panel[settings.type].standardOptions.withUnit(plot.unit)
 		) else {}
 	)
 
@@ -31,18 +31,18 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 	*/
 
 	+ (
-		if std.objectHas(def, "displayMode")
-		&& null != def.displayMode
-		&& std.objectHas(grafonnet.panel[def.type].options, "withDisplayMode") then (
-			grafonnet.panel[def.type].options.withDisplayMode(def.displayMode)
+		if std.objectHas(settings, "displayMode")
+		&& null != settings.displayMode
+		&& std.objectHas(grafonnet.panel[settings.type].options, "withDisplayMode") then (
+			grafonnet.panel[settings.type].options.withDisplayMode(settings.displayMode)
 		) else {}
 	)
 
 	+ (
-		if std.objectHas(def, "orientation")
-		&& null != def.orientation
-		&& std.objectHas(grafonnet.panel[def.type].options, "withOrientation") then (
-			grafonnet.panel[def.type].options.withOrientation(def.orientation)
+		if std.objectHas(settings, "orientation")
+		&& null != settings.orientation
+		&& std.objectHas(grafonnet.panel[settings.type].options, "withOrientation") then (
+			grafonnet.panel[settings.type].options.withOrientation(settings.orientation)
 		) else {}
 	)
 
@@ -50,36 +50,36 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 	+ (
 		if std.objectHas(plot, "legendMode") 
 		&& null != plot.legendMode 
-		&& std.objectHas(grafonnet.panel[def.type].options, "legend")
-		&& std.objectHas(grafonnet.panel[def.type].options.legend, "withDisplayMode") then (
-			grafonnet.panel[def.type].options.legend.withDisplayMode(plot.legendMode)
-			+ grafonnet.panel[def.type].options.legend.withCalcs([ 'lastNotNull', 'max', ])
+		&& std.objectHas(grafonnet.panel[settings.type].options, "legend")
+		&& std.objectHas(grafonnet.panel[settings.type].options.legend, "withDisplayMode") then (
+			grafonnet.panel[settings.type].options.legend.withDisplayMode(plot.legendMode)
+			+ grafonnet.panel[settings.type].options.legend.withCalcs([ 'lastNotNull', 'max', ])
 		) else {}
 	)
 
 	// Legend format, because legend_rightSide = true does not work.
 	+ {
-		[if std.objectHas(def, "legend") then "targets"]+: {
+		[if std.objectHas(settings, "legend") then "targets"]+: {
 				legend+: {
-					format: def.legend,
+					format: settings.legend,
 				}
 		}
 	}
 
 	+ (
-		if std.objectHas(def, "legend")
-		&& null != def.legend
-		&& std.objectHas(grafonnet.panel[def.type].options, "withLegend") then (
-			grafonnet.panel[def.type].options.withLegend(def.displayMode)
+		if std.objectHas(settings, "legend")
+		&& null != settings.legend
+		&& std.objectHas(grafonnet.panel[settings.type].options, "withLegend") then (
+			grafonnet.panel[settings.type].options.withLegend(settings.displayMode)
 		) else {}
 	)
 	*/
 
 	+ (
-		if std.objectHas(def, "legend")
-		&& null != def.legend
-		&& std.objectHas(grafonnet.panel[def.type].options, "withLegend") then (
-			grafonnet.panel[def.type].options.withLegend(def.legend)
+		if std.objectHas(settings, "legend")
+		&& null != settings.legend
+		&& std.objectHas(grafonnet.panel[settings.type].options, "withLegend") then (
+			grafonnet.panel[settings.type].options.withLegend(settings.legend)
 		) else {}
 	)
 
@@ -94,10 +94,10 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 	}
 
 	+ (
-		if std.objectHas(def, "showThresholdLabels")
-		&& null != def.showThresholdLabels
-		&& std.objectHas(grafonnet.panel[def.type].options, "withLegend") then (
-			grafonnet.panel[def.type].options.withLegend(def.showThresholdLabels)
+		if std.objectHas(settings, "showThresholdLabels")
+		&& null != settings.showThresholdLabels
+		&& std.objectHas(grafonnet.panel[settings.type].options, "withLegend") then (
+			grafonnet.panel[settings.type].options.withLegend(settings.showThresholdLabels)
 		) else {}
 	)
 
@@ -106,11 +106,11 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
      	    Default field configs
      	*/
      	    options+: {
-                 [if std.objectHas(def, "showThresholdLabels")
-                 && null != def.showThresholdLabels then "showThresholdLabels"]: def.showThresholdLabels,
+                 [if std.objectHas(settings, "showThresholdLabels")
+                 && null != settings.showThresholdLabels then "showThresholdLabels"]: settings.showThresholdLabels,
 
-                 [if std.objectHas(def, "showThresholdMarkers")
-                 && null != def.showThresholdMarkers then "showThresholdMarkers"]: def.showThresholdMarkers,
+                 [if std.objectHas(settings, "showThresholdMarkers")
+                 && null != settings.showThresholdMarkers then "showThresholdMarkers"]: settings.showThresholdMarkers,
              }
      	}
 
