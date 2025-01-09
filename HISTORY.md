@@ -34,3 +34,7 @@ Grafonnet version updated to version 10.2.0
 ## 10.0
 
 First version of grafonnet-extras.
+
+----
+
+[grafonnet-extras](README.md).
