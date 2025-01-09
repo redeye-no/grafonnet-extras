@@ -16,7 +16,7 @@ What next
 */
 
 # Import the extras libraries
-local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.0/main.libsonnet";
+local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.1/main.libsonnet";
 local config = import "./configs.libsonnet";
 
 # Import plot defs and dashboard inputs
@@ -29,7 +29,7 @@ local inputs = [ nputs.environment(), nputs.component() ];
 local panels = [
 		extras.panels.new(
 			title = "Used Memory", 
-			def= { type: "timeSeries" },
+			settings= { type: "timeSeries" },
 			plots = [ plots.usedMemoryPlot ],
 			geometry = { x:1, y:1, w: 8, h:8 }
 		) 

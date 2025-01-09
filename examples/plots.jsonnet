@@ -2,7 +2,7 @@
 
 */
 
-local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.0/main.libsonnet";
+local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.1/main.libsonnet";
 local configs = import "configs.libsonnet";
 
 ################
@@ -22,7 +22,20 @@ local configs = import "configs.libsonnet";
             ref = "mem_used",
             legend = "used",
             query = "base_memory_usedHeap_bytes",
-            datasource = configs.uids.prometheus
+            datasource = configs.uids.prometheus,
+            settings = {
+                    transformRenameByRegex: [{ regex: @'.*action="([^"]+)".*', rename: "$1"}],
+                    transformFilterByValue: [
+                            {
+                                    type: "include",
+                                    match: "any",
+                                    filters: [{ field: "any", filter: "lower", value: 0.123 }]
+                            }
+                    ],
+                    transformFilterByRefID: "up_down|mem_used|mem_committed",
+                    transformLimit: 187,
+                    transformTranspose: { firstName: "name0", restName: "name1" }
+            }
         ),
 
     committedMemoryPlot:

@@ -1,7 +1,7 @@
 /*
 What this does
-- introduces plot configuration
-- render panels in a grid layout
+- render panels with multiple plots
+- Configure plots with settings
 
 Things to note
 - with a grid, panels get laid out one row at a time (each row is 24 units wide)
@@ -10,12 +10,10 @@ Things to note
 
 What next
 - plots can be defined in separate files so they can be reused in various dashboards
-- duplicate the "Used Memory" panel in line 56, and change the type to "gauge" (now it's easy to compare usability)
-- panels can be sized and positioned independently using geometry hints
 */
 
 # Import the extras libraries
-local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.0/main.libsonnet";
+local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.1/main.libsonnet";
 
 # Import plot defs and dashboard inputs
 local plots = import "./plots.libsonnet";
@@ -28,18 +26,18 @@ local inputs = [ nputs.environment(), nputs.component() ];
 local panels = [
 		extras.panels.new(
 			title = "Up/down", 
-			def= { type: "stat", thresholdAbsolute: configs.upDownThresholds },
+			settings= { type: "stat", thresholdAbsolute: configs.upDownThresholds },
 			plots = [ plots.upDownPlot ]
 		),
 		extras.panels.new(
 			title = "Used Memory", 
-			def= { type: "timeSeries" },
+			settings= { type: "timeSeries" },
 			plots = [ plots.usedMemoryPlot, plots.committedMemoryPlot ],
 			configs = extras.configs
 		),
 		extras.panels.new(
 			title = "Used Memory", 
-			def= { type: "gauge" },
+			settings= { type: "gauge" },
 			plots = [ plots.usedMemoryPlot, plots.committedMemoryPlot ],
 		)
 	];
