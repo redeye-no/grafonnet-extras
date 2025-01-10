@@ -99,14 +99,6 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 		}
 	}
 
-	+ (
-		if std.objectHas(settings, "showThresholdLabels")
-		&& null != settings.showThresholdLabels
-		&& std.objectHas(grafonnet.panel[settings.type].options, "withLegend") then (
-			grafonnet.panel[settings.type].options.withLegend(settings.showThresholdLabels)
-		) else {}
-	)
-
 	+ {
      	/*
      	    Default field configs

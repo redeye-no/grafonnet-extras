@@ -3,6 +3,7 @@
 */
 
 local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/main.libsonnet";
+local ec = import "github.com/redeye-no/grafonnet-extras/dist/11.1/configs.libsonnet";
 local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 
 {
@@ -142,6 +143,7 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
             |`mappingSpecial` | Special value mappings | `mappingSpecial: [ { match: "nan-null", text: "special", color: "blue" } ]` |
             |`min` | Configure min value | `min: 1` |
             |`max` | Configure max value | `max: 7` |
+            |`palette` | Color scheme for panel | `palette: ["#a8d5e7", "#d2f0b3", "#d9a9d3"]` |
             |`pointSize` | Configure max value | `max: 7` |
             |`thresholdAbsolute` | Absolute threshold values | `thresholdAbsolute: [ { "color": "red", "value": 0 }, { "color": "green", "value": 1 }]` |
             |`thresholdPercent` | Percentage threshold values | `thresholdPercent: [ { "color": "red", "value": 0 }, { "color": "yellow", "value": 25 }, { "color": "green", "value": 50 }]` |
@@ -158,12 +160,12 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
     ),
 	new(
 		title = "",
-		settings = { type: "stat" },
+		settings = { type: "stat", palette: ec.palette },
 		plots = [],
-		configs = null,
+		configs = ec,
 		geometry = {}
 	) :: 		
-	(import "impl/panel.libsonnet").new(title = title, settings = settings)
+	(import "impl/panel.libsonnet").new(title = title, settings = settings, geometry = geometry)
 
 	+ (
 		local visuals = [(import "impl/panel.libsonnet").build(plot = plots[i], settings = settings, configs = configs, index = i),

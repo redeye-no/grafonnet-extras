@@ -102,6 +102,13 @@ The dist version is in the form:
 
 	major.minor
 
+Supported versions in this release:
+
+    11.1
+    11.0
+    10.2
+    10.0
+
 The major number hints at compatibility with a grafonnet major release.
 The minor number in for internal tracking not associated with grafonnet releases.
 

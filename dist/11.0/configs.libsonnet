@@ -6,7 +6,7 @@ functions that expect a configuration, for example, extras.panels.new().
 
 Make sure to keep the following reserved objects:
 	intervals,
-	plotColors
+	palette
 
 */
 local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';

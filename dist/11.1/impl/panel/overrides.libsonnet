@@ -10,41 +10,50 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 		settings = { type: "" },
 		configs = null,
 		index = 0
-		) ::
-        (
-			if std.objectHas(plot, "ref") then {
-                fieldConfig+: {
-                    overrides+: [
+    ) ::
+    {
+        fieldConfig+: {
+            [if std.objectHas(plot, "ref") then "overrides"]+: [
+                {
+                    matcher: {
+                        id: "byFrameRefID",
+                        options: plot.ref,
+                    },
+                    properties: [
                         {
-                            matcher: {
-                                id: "byFrameRefID",
-                                options: plot.ref,
-                            },
-                            properties: [
-                                {
-                                    id: "custom.axisPlacement",
-                                    value: plot.yAxisPlacement,
-                                },
-                                if null != configs
-                                && "stat" != settings.type then
-                                {
-                                    id: "color",
-                                    value: {
-                                            mode: "fixed",
-                                            fixedColor: configs.plotColors[index % std.length(configs.plotColors)]
-                                    }
-                                },
-                                if std.objectHas(plot, "legend")
-                                && null != plot.legend then
-                                {
-                                    id: "displayName",
-                                    value: plot.legend
-                                }
-                            ]
-                        }
+                            id: "custom.axisPlacement",
+                            value: plot.yAxisPlacement,
+                        },
+                        if std.objectHas(settings, "palette")
+                        && null != settings.palette
+                        && std.isArray(settings.palette) then
+                        {
+                            id: "color",
+                            value: {
+                                mode: "fixed",
+                                fixedColor: configs.palette[index % std.length(settings.palette)]
+                            }
+                        } else
+                        if null != configs
+                        && std.objectHas(configs, "palette")
+                        && std.isArray(configs.palette) then
+                        {
+                            id: "color",
+                            value: {
+                                mode: "fixed",
+                                fixedColor: configs.palette[index % std.length(configs.palette)]
+                            }
+                        } else {},
+                        if std.objectHas(plot, "legend")
+                        && null != plot.legend then
+                        {
+                            id: "displayName",
+                            value: plot.legend
+                        } else {}
                     ]
                 }
-			}
-		)
+            ]
+        }
+    }
 }
 
