@@ -11,6 +11,9 @@ Things to note
 - the query in the plot is your normal grafana query
 - the plot specifies a datasource that will process the query
 - a panel can have more than 1 plot attached to it
+- the panel is placed 1 grid unit away from the left margin
+
+![Simple dash](gfx/1-simple-dash.png)
 
 What next
 - plots can be defined in separate files so they can be reused in various dashboards
@@ -27,6 +30,9 @@ Things to note
 - with a grid, panels get laid out one row at a time (each row is 24 units wide)
 - each panel in this example is set to 8 units wide
 - a plot can be visualised in different panels
+- the first panel is placed right at left margin
+
+![Grid dash](gfx/2-grid-dash.png)
 
 What next
 - plots can be defined in separate files so they can be reused in various dashboards
@@ -39,12 +45,13 @@ What this does
 - Configure plots with settings
 
 Things to note
-- with a grid, panels get laid out one row at a time (each row is 24 units wide)
-- each panel in this example is set to 8 units wide
 - a plot can be visualised in different panels
+- a palette is provided to display plots in different colours
+
+![Multi-plot dash](gfx/3-multi-plots.png)
 
 What next
-- plots can be defined in separate files so they can be reused in various dashboards
+- thresholds, overrides, mappings and transformations
 
 ----
 

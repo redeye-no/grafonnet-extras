@@ -4,12 +4,11 @@ What this does
 - Configure plots with settings
 
 Things to note
-- with a grid, panels get laid out one row at a time (each row is 24 units wide)
-- each panel in this example is set to 8 units wide
 - a plot can be visualised in different panels
+- a palette is provided to display plots in different colours
 
 What next
-- plots can be defined in separate files so they can be reused in various dashboards
+- thresholds, overrides, mappings and transformations
 */
 
 # Import the extras libraries
@@ -31,7 +30,7 @@ local panels = [
 		),
 		extras.panels.new(
 			title = "Used Memory", 
-			settings= { type: "timeSeries" },
+			settings= { type: "timeSeries", palette: configs.palette },
 			plots = [ plots.usedMemoryPlot, plots.committedMemoryPlot ],
 			configs = extras.configs
 		),
