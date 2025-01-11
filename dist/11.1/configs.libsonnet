@@ -83,31 +83,37 @@ roygbv-ai       - "#fd7f6f", "#ffa600", "#ffee65", "#5ad45a", "#7eb0d5", "#bd7eb
 springpastels   - "#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"
 */
     # A colour palette for panels with multiple plots
-	plotColors: [
+	paletteDarkMore: [
         "#7eb0d5", "#b2e061", "#bd7ebe", "#fd7f6f", "#ffb55a", "#ffee65", "#beb9db", "#8bd3c7", "#fdcce5"
 	],
 
+	paletteLightMode: [
+        "#a8d5e7", "#d2f0b3", "#d9a9d3", "#fdb6ad", "#ffd8a5", "#fff3a5", "#e1dff1", "#bfe8dc", "#ffe2f0"
+	],
+
+	palette: self.paletteLightMode,
+
 	upDownThresholds : [
-      { "color": "red", "value": null },
-      { "color": "red", "value": 0 },
-      { "color": "green", "value": 1 }
+      { color: "red", value: null },
+      { color: "red", value: 0 },
+      { color: "green", value: 1 }
     ],
 
 	statThresholdPercents : [
-        { "color": "red",  "value": null },
-        { "color": "red", "value": 0 },
-        { "color": "yellow", "value": 0 },
-        { "color": "green", "value": 0.001 }
+        { color: "red",  value: null },
+        { color: "red", value: 0 },
+        { color: "yellow", value: 0 },
+        { color: "green", value: 0.001 }
     ],
 	
 	statMappings: [
 		{
-			"type": "value",
-			"options": {
+			type: "value",
+			options: {
 				"0": {
-					"text": "Down",
-					"color": "red",
-					"index": 0
+					text: "Down",
+					color: "red",
+					index: 0
 				}
 			}
 		},
@@ -122,41 +128,6 @@ springpastels   - "#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee6
 			}
 		}
 	],
-	
-	statMappingsUpDown_________: [
-		{
-			"type": "value",
-			"options": {
-				"0": {
-					"text": "Down",
-					"color": "red",
-					"index": 1
-				}
-			}
-		},
-		{
-			"type": "special",
-			"options": {
-				"match": "null+nan",
-				"result": {
-					"text": "Down",
-					"index": 0,
-					"color": "red"
-				}
-			}
-		},
-		{
-			"type": "range",
-			"options": {
-				"from": 0.00001,
-				"to": 99999999999,
-				"result": {
-					"text": "Up",
-					"index": 2,
-					"color": "green"
-				}
-			}
-		}
-	],	
+
 }
 

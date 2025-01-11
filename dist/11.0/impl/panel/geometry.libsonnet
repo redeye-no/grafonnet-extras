@@ -7,17 +7,17 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 {
 	build(
 		type = "",
-		def = { type: "" },
+		settings = { type: "" },
 		geometry = {}
 		) :: 
 		(
 			if std.objectHas(geometry, "w")  then 
-				grafonnet.panel[def.type].gridPos.withW(geometry.w)
+				grafonnet.panel[settings.type].gridPos.withW(geometry.w)
 			else {}
 		)
 		+(	
 			if std.objectHas(geometry, "h")  then 
-				grafonnet.panel[def.type].gridPos.withH(geometry.h)
+				grafonnet.panel[settings.type].gridPos.withH(geometry.h)
 			else {}
 		)
 }

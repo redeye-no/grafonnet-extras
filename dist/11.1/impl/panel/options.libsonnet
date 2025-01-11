@@ -6,9 +6,8 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 
 {
 	build(
-		type = "",
-		settings = { type: "" },
 		plot = {},
+		settings = { type: "" },
 		configs = null
 	) :: 
 	grafonnet.panel[settings.type].queryOptions.withInterval(
@@ -17,7 +16,7 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 		else "10s")
 
 	/*
-	    Standard coptions
+	    Standard options
 	*/
 	+ (
 		if std.objectHas(plot, "unit") 
@@ -25,6 +24,13 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 			grafonnet.panel[settings.type].standardOptions.withUnit(plot.unit)
 		) else {}
 	)
+
+    + (
+        if std.objectHas(settings, "decimals")
+        && null != settings.decimals then (
+            grafonnet.panel[settings.type].standardOptions.withDecimals(settings.decimals)
+        ) else {}
+    )
 
 	/*
 	    Panel options
@@ -92,14 +98,6 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 				}
 		}
 	}
-
-	+ (
-		if std.objectHas(settings, "showThresholdLabels")
-		&& null != settings.showThresholdLabels
-		&& std.objectHas(grafonnet.panel[settings.type].options, "withLegend") then (
-			grafonnet.panel[settings.type].options.withLegend(settings.showThresholdLabels)
-		) else {}
-	)
 
 	+ {
      	/*

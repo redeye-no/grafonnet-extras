@@ -7,10 +7,10 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 {
 	new(
 		title = "",
-		def = { type: "stat" }
+		settings = { type: "stat" }
 	) ::
-	grafonnet.panel[def.type].new(title)
-	+ grafonnet.panel[def.type].panelOptions.withType()
+	grafonnet.panel[settings.type].new(title)
+	+ grafonnet.panel[settings.type].panelOptions.withType()
 	,
 	
 	/** ################################################################
@@ -21,20 +21,20 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 	 */
 	build(
 		title = "",
-		def = { type: "stat" },
+		settings = { type: "stat" },
 		plot = {},
 		configs = null,
 		geometry = {},
 		index = 0
 	) :: (
-		grafonnet.panel[def.type].queryOptions.withTargetsMixin(plot)
-		+ (import "panel/configs.libsonnet").build(def = def, plot = plot)
-		+ (import "panel/options.libsonnet").build(def = def, plot = plot, configs = configs)
-		+ (import "panel/overrides.libsonnet").build(def = def, plot = plot, configs = configs, index = index)
-		+ (import "panel/thresholds.libsonnet").build(def = def, plot = plot, index = index)
-		+ (import "panel/mappings.libsonnet").build(def = def, plot = plot, index = index)
-		# + (import "panel/alerts.libsonnet").build(def = def, plot = plot, configs = configs, index = index)
-		+ (import "panel/geometry.libsonnet").build(def = def, geometry = geometry)
+		grafonnet.panel[settings.type].queryOptions.withTargetsMixin(plot)
+		+ (import "panel/configs.libsonnet").build(settings = settings, plot = plot)
+		+ (import "panel/options.libsonnet").build(settings = settings, plot = plot, configs = configs)
+		+ (import "panel/overrides.libsonnet").build(settings = settings, plot = plot, configs = configs, index = index)
+		+ (import "panel/thresholds.libsonnet").build(settings = settings, plot = plot, index = index)
+		+ (import "panel/mappings.libsonnet").build(settings = settings, plot = plot, index = index)
+		# + (import "panel/alerts.libsonnet").build(settings = settings, plot = plot, configs = configs, index = index)
+		+ (import "panel/geometry.libsonnet").build(settings = settings, geometry = geometry)
 	)
 	,	
 }

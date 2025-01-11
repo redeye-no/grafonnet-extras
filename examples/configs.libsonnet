@@ -5,12 +5,8 @@ Make your own copy of this file in your projects, and provide that to
 functions that expect a configuration, for example, extras.panels.new().
 
 Make sure to keep the following reserved objects:
-	uids,
 	intervals,
-	plotColors, 
-	statThresholdAbsolutes, 
-	statThresholdPercents, 
-	statMappings
+	palette
 
 */
 
@@ -26,9 +22,16 @@ Make sure to keep the following reserved objects:
 		searchTime: "now"
 	},
 	
-	plotColors: [
-		"#7eb0d5", "#b2e061", "#bd7ebe", "#fd7f6f", "#ffb55a", "#ffee65", "#beb9db", "#8bd3c7", "#fdcce5"
+    # A colour palette for panels with multiple plots
+	paletteDarkMore: [
+        "#7eb0d5", "#b2e061", "#bd7ebe", "#fd7f6f", "#ffb55a", "#ffee65", "#beb9db", "#8bd3c7", "#fdcce5"
 	],
+
+	paletteLightMode: [
+        "#a8d5e7", "#d2f0b3", "#d9a9d3", "#fdb6ad", "#ffd8a5", "#fff3a5", "#e1dff1", "#bfe8dc", "#ffe2f0"
+	],
+
+	palette: self.paletteLightMode,
 
 	upDownThresholds : [
 			{ "color": "red",  "value": null },

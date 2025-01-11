@@ -12,7 +12,7 @@ OO-friendly templating interface to Grafana dashboards.
 
 This library contains the following packages:
 
-`local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";`
+`local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.1/main.libsonnet";`
 `extras.dashboard` - create dashboards
 `extras.panels` - create and configure panels (plots)
 `extras.inputs` - inputs/variables
@@ -20,7 +20,7 @@ This library contains the following packages:
 `extras.configs` - visualisation configs
 
 ## Usage
-    local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+    local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.1/main.libsonnet";
     extras.dashboard.new(
         title = "Extras: Simple Dash",
         uid = "02042265-58c5-478f-980e-420d8519961f",
@@ -32,11 +32,11 @@ This library contains the following packages:
 * [`obj dashboard`](#obj-dashboard)
   * [`fn new(title='Unnamed Extras Dashboard', description='', uid='', editable='false, true', timezone="utc, 'IANA TZDB zone ID', browser", schemaVersion=39, configs='extras.config', grid, panels=[], inputs=[], links=[])`](#fn-dashboardnew)
 * [`obj panels`](#obj-panels)
-  * [`fn new(title='', def={type: 'stat'}, plots, configs, geometry={})`](#fn-panelsnew)
+  * [`fn new(title='', settings={type: 'stat'}, plots, configs, geometry={})`](#fn-panelsnew)
   * [`fn grid(rows=[], panelWidth=1)`](#fn-panelsgrid)
   * [`fn row(title='', panels=[], configs, collapses=false)`](#fn-panelsrow)
 * [`obj sources`](#obj-sources)
-  * [`fn plot(ref=[], legend=[], description=[], query=[], unit=[], datasource=[], legendMode='list, table, hidden', legendPlacement='bottom, right', yAxisPlacement='auto, left, right', yAxisLogScale='0, 2, 10')`](#fn-sourcesplot)
+  * [`fn plot(ref=[], legend='', description=[], query=[], unit=[], datasource=[], legendMode='list, table, hidden', legendPlacement='bottom, right', yAxisPlacement='auto, left, right', yAxisLogScale='0, 2, 10')`](#fn-sourcesplot)
   * [`fn testing(format='random_walk', legend='', datasource={type: 'datasource', uid: 'grafana'})`](#fn-sourcestesting)
 
 ## Fields
@@ -85,7 +85,7 @@ Dash attributes:
 ### fn panels.new
 
 ```ts
-new(title='', def={type: 'stat'}, plots, configs, geometry={})
+new(title='', settings={type: 'stat'}, plots, configs, geometry={})
 ```
 
 Create a new panel that can be displayed in a dashboard.
@@ -95,14 +95,14 @@ A plot defines the data is to be presented/rendered in a panel.
 ## Usage
 First, create a plot (a query with hints on how to display the results)
 
-    local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+    local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.1/main.libsonnet";
     local memoryUsedHeapPlot =
         extras.sources.plot(
             ref = "mem_used",
             legend = "used",
             unit = "decabyte",
             query = "base_memory_usedHeap_bytes",
-            datasource = extras.configs.uids.prometheus
+            datasource = configs.uids.prometheus
         );
 
 Then create panels that will visualise the plots. A panel specifies how plots are rendered (time series, gauge, heatmap, etc.) in a dashboard.
@@ -111,7 +111,7 @@ A single panel can harbour multiple plots.
     local panels = [
             extras.panels.new(
                 title = "Used Memory",
-                def = { type: "timeSeries" },
+                settings = { type: "timeSeries" },
                 plots = [ memoryUsedHeapPlot, memoryCommittedHeapPlot ]
             )
         ];
@@ -130,13 +130,13 @@ Now the panels can be added to the dashboard for display.
 |Attribute|Description|Examples|
 |----|----|----|
 |`title` | Panel title. | Default "" |
-|`def` | Visual definition. | `{ type: "stat" }}` |
 |`plots` | Array of plots that provide the visualisation data. | See previous example |
+|`settings` | Panel settings. | `{ type: "stat" }}` |
 |`configs` | Common configuration parameters such as refresh intervals, plot colours. | `{ intervals: { refreshDash: "10s", searchWindow: "6h", searchTime: "now" }}` |
 |`geometry` | Panel geometry in Grafana units | `{ x:1, y:1, w: 8, h:8 }` |
 
-## Panel definition
-Panel definitions are controlled by the `def` argument object. The general syntax is as follows:
+## Panel settings
+Panel settings are controlled by the `settings` argument object. The general syntax is as follows:
 
     { type: "panelType" }
 
@@ -194,11 +194,51 @@ Create a new row
 ### fn sources.plot
 
 ```ts
-plot(ref=[], legend=[], description=[], query=[], unit=[], datasource=[], legendMode='list, table, hidden', legendPlacement='bottom, right', yAxisPlacement='auto, left, right', yAxisLogScale='0, 2, 10')
+plot(ref=[], legend='', description=[], query=[], unit=[], datasource=[], legendMode='list, table, hidden', legendPlacement='bottom, right', yAxisPlacement='auto, left, right', yAxisLogScale='0, 2, 10')
 ```
 
 A plot is an object that defines a datasource, and provides visualisation constraints/configurations.
-The configuration parameters include legends and axis settings.
+The configuration parameters include legends, axis settings, tranformations, alerts, etc.
+
+    local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.1/main.libsonnet";
+    local memoryUsedHeapPlot =
+        extras.sources.plot(
+            ref = "mem_used",
+            legend = "used",
+            unit = "decabyte",
+            query = "base_memory_usedHeap_bytes",
+            datasource = configs.uids.prometheus,
+            settings = {}
+        );
+
+## Plot configuration
+
+|Attribute|Description|Examples|
+|----|----|----|
+|`ref` | Plot reference/id. | Default "" |
+|`legend` | Legend text. | "" |
+|`description` | Plot description. |  |
+|`query` | Specifies the data to be visualised by this plot Query fetches data from a datasource. | `rate(application_http_request_count_total{job='$job', operation='pass'}[$__rate_interval])` |
+|`unit` | Unit of plot data. |  |
+|`datasource` | Unique ID of the source of data to be visualised. | Prometheus, Loki, InfluxDB, etc. |
+|`settings` | Plot settings. | `{ transformLimit: 187 }}` |
+|`legendMode` |  | `list, table, hidden` |
+|`legendPlacement` |  | `bottom, right` |
+|`yAxisPlacement` |  | `auto, left, right` |
+|`yAxisLogScale` |  | 0, 2, 10 |
+
+## Plot settings
+Plot settings are controlled by the `settings` argument object. The following example sets a limit to the number of data records in the plot:
+
+        settings = { transformLimit: 100 }
+
+|Attribute|Description|Value, enum, examples|
+|----|----|----|
+|`transformFilterByValue` | Filter plot results by value | `transformFilterByValue: [ { type: "exclude", match: "any", filters: [ field: "totals", filter: "lower", value: 50 ] } ]` |
+|`transformFilterByRefID` | Number of decimals to display for values | `transformFilterByRefID: "plotRef1|plotRef2"` |
+|`transformLimit` | Limit the number of data records | `transformLimit: "value"` |
+|`transformRenameByRegex` | Rename plot results using a regular expression | `transformRenameByRegex: [ { regex: @'.*action="([^"]+)".*', rename: "$1" } ]` |
+|`transformTranspose` | Pivot plot data frame | `transformTranspose: { firstName: "", restName: "" }` |
 
 
 ### fn sources.testing

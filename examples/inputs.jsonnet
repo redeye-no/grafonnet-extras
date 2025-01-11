@@ -2,7 +2,7 @@
 
 */
 
-local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.0/main.libsonnet";
+local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.1/main.libsonnet";
 
 ################
 # Input variables

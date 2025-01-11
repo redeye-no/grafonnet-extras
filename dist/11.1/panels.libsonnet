@@ -3,6 +3,7 @@
 */
 
 local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/main.libsonnet";
+local ec = import "github.com/redeye-no/grafonnet-extras/dist/11.1/configs.libsonnet";
 local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 
 {
@@ -75,14 +76,14 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
             ## Usage
             First, create a plot (a query with hints on how to display the results)
 
-                local extras = import "github.com/redeye-no/grafonnet-extras/dist/10.2/main.libsonnet";
+                local extras = import "github.com/redeye-no/grafonnet-extras/dist/11.1/main.libsonnet";
                 local memoryUsedHeapPlot =
                     extras.sources.plot(
                         ref = "mem_used",
                         legend = "used",
                         unit = "decabyte",
                         query = "base_memory_usedHeap_bytes",
-                        datasource = extras.configs.uids.prometheus
+                        datasource = configs.uids.prometheus
                     );
 
             Then create panels that will visualise the plots. A panel specifies how plots are rendered (time series, gauge, heatmap, etc.) in a dashboard.
@@ -110,13 +111,13 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
             |Attribute|Description|Examples|
             |----|----|----|
             |`title` | Panel title. | Default "" |
-            |`settings` | Visual definition. | `{ type: "stat" }}` |
             |`plots` | Array of plots that provide the visualisation data. | See previous example |
+            |`settings` | Panel settings. | `{ type: "stat" }}` |
             |`configs` | Common configuration parameters such as refresh intervals, plot colours. | `{ intervals: { refreshDash: "10s", searchWindow: "6h", searchTime: "now" }}` |
             |`geometry` | Panel geometry in Grafana units | `{ x:1, y:1, w: 8, h:8 }` |
 
-            ## Panel definition
-            Panel definitions are controlled by the `settings` argument object. The general syntax is as follows:
+            ## Panel settings
+            Panel settings are controlled by the `settings` argument object. The general syntax is as follows:
 
                 { type: "panelType" }
 
@@ -142,6 +143,7 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
             |`mappingSpecial` | Special value mappings | `mappingSpecial: [ { match: "nan-null", text: "special", color: "blue" } ]` |
             |`min` | Configure min value | `min: 1` |
             |`max` | Configure max value | `max: 7` |
+            |`palette` | Color scheme for panel | `palette: ["#a8d5e7", "#d2f0b3", "#d9a9d3"]` |
             |`pointSize` | Configure max value | `max: 7` |
             |`thresholdAbsolute` | Absolute threshold values | `thresholdAbsolute: [ { "color": "red", "value": 0 }, { "color": "green", "value": 1 }]` |
             |`thresholdPercent` | Percentage threshold values | `thresholdPercent: [ { "color": "red", "value": 0 }, { "color": "yellow", "value": 25 }, { "color": "green", "value": 50 }]` |
@@ -158,15 +160,15 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
     ),
 	new(
 		title = "",
-		settings = { type: "stat" },
+		settings = { type: "stat", palette: ec.palette },
 		plots = [],
-		configs = null,
+		configs = ec,
 		geometry = {}
 	) :: 		
-	(import "impl/panel.libsonnet").new(title = title, settings = settings)
+	(import "impl/panel.libsonnet").new(title = title, settings = settings, geometry = geometry)
 
 	+ (
-		local options = [(import "impl/panel.libsonnet").build(settings = settings, plot = plots[i], configs = configs, index = i),
+		local visuals = [(import "impl/panel.libsonnet").build(plot = plots[i], settings = settings, configs = configs, index = i),
 		for i in std.range(0, std.length(plots) - 1)];
 
 		/*
@@ -182,50 +184,50 @@ local d = import 'github.com/jsonnet-libs/docsonnet/doc-util/main.libsonnet';
 
 		*/
 		(
-			if std.length(options) > 0 then
-				options[0]
+			if std.length(visuals) > 0 then
+				visuals[0]
 			else {}
 		)
 
 		+(
-			if std.length(options) > 1 then
-				options[1]
+			if std.length(visuals) > 1 then
+				visuals[1]
 			else {}
 		)
 
 		+(
-			if std.length(options) > 2 then
-				options[2]
+			if std.length(visuals) > 2 then
+				visuals[2]
 			else {}
 		)
 
 		+(
-			if std.length(options) > 3 then
-				options[3]
+			if std.length(visuals) > 3 then
+				visuals[3]
 			else {}
 		)
 
 		+(
-			if std.length(options) > 4 then
-				options[4]
+			if std.length(visuals) > 4 then
+				visuals[4]
 			else {}
 		)
 
 		+(
-			if std.length(options) > 5 then
-				options[5]
+			if std.length(visuals) > 5 then
+				visuals[5]
 			else {}
 		)
 
 		+(
-			if std.length(options) > 6 then
-				options[6]
+			if std.length(visuals) > 6 then
+				visuals[6]
 			else {}
 		)
 
 		+(
-			if std.length(options) > 7 then
-				options[7]
+			if std.length(visuals) > 7 then
+				visuals[7]
 			else {}
 		)
 	)
