@@ -52,49 +52,13 @@ local grafonnet = import "github.com/grafana/grafonnet/gen/grafonnet-v11.4.0/mai
 		) else {}
 	)
 
-	/*
-	+ (
-		if std.objectHas(plot, "legendMode") 
-		&& null != plot.legendMode 
-		&& std.objectHas(grafonnet.panel[settings.type].options, "legend")
-		&& std.objectHas(grafonnet.panel[settings.type].options.legend, "withDisplayMode") then (
-			grafonnet.panel[settings.type].options.legend.withDisplayMode(plot.legendMode)
-			+ grafonnet.panel[settings.type].options.legend.withCalcs([ 'lastNotNull', 'max', ])
-		) else {}
-	)
-
-	// Legend format, because legend_rightSide = true does not work.
-	+ {
-		[if std.objectHas(settings, "legend") then "targets"]+: {
-				legend+: {
-					format: settings.legend,
-				}
-		}
-	}
-
-	+ (
-		if std.objectHas(settings, "legend")
-		&& null != settings.legend
-		&& std.objectHas(grafonnet.panel[settings.type].options, "withLegend") then (
-			grafonnet.panel[settings.type].options.withLegend(settings.displayMode)
-		) else {}
-	)
-	*/
-
-	+ (
-		if std.objectHas(settings, "legend")
-		&& null != settings.legend
-		&& std.objectHas(grafonnet.panel[settings.type].options, "withLegend") then (
-			grafonnet.panel[settings.type].options.withLegend(settings.legend)
-		) else {}
-	)
-
 	// Legend placement, because legend_rightSide = true does not work.
+	// Also, only "bottom" and "right" are supported.
 	+ {
 		[if std.objectHas(plot, "legendPlacement")
 		&& "right" == plot.legendPlacement then "options"]+: {
 				legend+: {
-					placement: "right",
+					placement: plot.legendPlacement,
 				}
 		}
 	}
